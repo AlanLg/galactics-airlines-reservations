@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("")
 public class FlightController {
 
-    private final FlightRepository repository = new FlightRepository();
+    private final FlightRepository repository;
+
+    public FlightController(FlightRepository repository) {
+        this.repository = repository;
+    }
 
     @GetMapping("/{id}")
     public Flight findById(@PathVariable long id) {
-        return repository.getFlights().stream().filter(flight -> flight.id() == id)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("invalid id"));
+        return null;
     }
 }
