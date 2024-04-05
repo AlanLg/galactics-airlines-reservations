@@ -4,7 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Getter;
 
+@Getter
 @Entity
 public class Airplane {
     @Id
@@ -13,6 +15,4 @@ public class Airplane {
     private String brand;
     private String model;
     private int manufacturingYear;
-
-    // Constructors, getters, and setters
 }

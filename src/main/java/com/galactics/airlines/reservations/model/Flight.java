@@ -1,7 +1,9 @@
 package com.galactics.airlines.reservations.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
+@Getter
 @Entity
 public class Flight {
     @Id
@@ -21,6 +23,4 @@ public class Flight {
     @JoinColumn(name = "airplane_id")
     private Airplane airplane;
     private int numberOfSeats;
-
-    // Constructors, getters, and setters
 }

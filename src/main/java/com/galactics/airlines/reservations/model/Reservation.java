@@ -2,7 +2,9 @@ package com.galactics.airlines.reservations.model;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
+@Getter
 @Entity
 public class Reservation {
     @Id
@@ -14,6 +16,4 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
-
-    // Constructors, getters, and setters
 }
