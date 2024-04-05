@@ -1,12 +1,10 @@
 package com.galactics.airlines.reservations.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.Getter;
 
 @Getter
 @Entity
-public class Client {
-    @Id
+public class Client extends Person {
     private String passportNumber;
 }
