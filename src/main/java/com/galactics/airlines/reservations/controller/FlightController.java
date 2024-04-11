@@ -1,17 +1,38 @@
 package com.galactics.airlines.reservations.controller;
 
-import com.galactics.airlines.reservations.model.Flight;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.galactics.airlines.reservations.model.dto.request.FlightDTORequest;
+import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
+import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
+import com.galactics.airlines.reservations.service.FlightService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/flight")
 public class FlightController {
+    private final FlightService flightService;
 
-    @GetMapping("/{id}")
-    public Flight findById(@PathVariable long id) {
-        return null;
+    public FlightController(FlightService flightService) {
+        this.flightService = flightService;
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<FlightDTOResponse> addFlight(@RequestBody FlightDTORequest flightDTORequest) throws GalaticsAirlinesException {
+        return ResponseEntity.ok(flightService.addFlight(flightDTORequest));
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<FlightDTOResponse> updateFlight(@PathVariable Long id, @RequestBody FlightDTORequest flightDTORequest) throws GalaticsAirlinesException {
+        return ResponseEntity.ok(flightService.updateFlight(id, flightDTORequest));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteFlight(@PathVariable Long id) {
+        try {
+            flightService.deleteFlight(id);
+            return ResponseEntity.accepted().build();
+        } catch (GalaticsAirlinesException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

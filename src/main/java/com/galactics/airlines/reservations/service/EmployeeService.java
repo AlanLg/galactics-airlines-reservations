@@ -1,6 +1,6 @@
 package com.galactics.airlines.reservations.service;
 
-import com.galactics.airlines.reservations.model.Employee;
+import com.galactics.airlines.reservations.model.entity.Employee;
 import com.galactics.airlines.reservations.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

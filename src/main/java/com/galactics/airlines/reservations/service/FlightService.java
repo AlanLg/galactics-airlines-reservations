@@ -1,22 +1,16 @@
 package com.galactics.airlines.reservations.service;
 
-import com.galactics.airlines.reservations.model.Flight;
-import com.galactics.airlines.reservations.repository.FlightRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.galactics.airlines.reservations.model.dto.request.FlightDTORequest;
+import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
+import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
+import jakarta.transaction.Transactional;
+import org.springframework.http.ResponseEntity;
 
-import java.util.List;
+@Transactional
+public interface FlightService {
+    FlightDTOResponse addFlight(FlightDTORequest flightDTOIn) throws GalaticsAirlinesException;
 
-@Service
-public class FlightService {
-    private final FlightRepository flightRepository;
+    FlightDTOResponse updateFlight(Long id, FlightDTORequest flightDTORequest);
 
-    @Autowired
-    public FlightService(FlightRepository flightRepository) {
-        this.flightRepository = flightRepository;
-    }
-
-    public List<Flight> getAllFlights() {
-        return flightRepository.findAll();
-    }
+    void deleteFlight(Long id);
 }

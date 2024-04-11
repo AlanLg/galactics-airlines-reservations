@@ -1,4 +1,4 @@
-package com.galactics.airlines.reservations.model;
+package com.galactics.airlines.reservations.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
