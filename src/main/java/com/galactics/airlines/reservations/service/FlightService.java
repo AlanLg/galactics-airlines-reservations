@@ -1,10 +1,9 @@
 package com.galactics.airlines.reservations.service;
 
+import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
 import com.galactics.airlines.reservations.model.dto.request.FlightDTORequest;
 import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
-import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
 import jakarta.transaction.Transactional;
-import org.springframework.http.ResponseEntity;
 
 @Transactional
 public interface FlightService {

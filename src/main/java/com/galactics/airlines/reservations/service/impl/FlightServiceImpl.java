@@ -1,13 +1,12 @@
 package com.galactics.airlines.reservations.service.impl;
 
-import com.galactics.airlines.reservations.model.dto.request.FlightDTORequest;
-import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
 import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
 import com.galactics.airlines.reservations.mapper.FlightMapper;
+import com.galactics.airlines.reservations.model.dto.request.FlightDTORequest;
+import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
 import com.galactics.airlines.reservations.model.entity.Airplane;
 import com.galactics.airlines.reservations.model.entity.Airport;
 import com.galactics.airlines.reservations.model.entity.Flight;
-import com.galactics.airlines.reservations.repository.AirplaneRepository;
 import com.galactics.airlines.reservations.repository.AirportRepository;
 import com.galactics.airlines.reservations.repository.FlightRepository;
 import com.galactics.airlines.reservations.service.FlightService;
@@ -19,13 +18,13 @@ import java.util.Optional;
 @Service
 public class FlightServiceImpl implements FlightService {
 
+    private final AirplaneServiceImpl airplaneService;
     private final FlightRepository flightRepository;
-    private final AirplaneRepository airplaneRepository;
     private final AirportRepository airportRepository;
 
-    public FlightServiceImpl(FlightRepository flightRepository, AirplaneRepository airplaneRepository, AirportRepository airportRepository) {
+    public FlightServiceImpl(AirplaneServiceImpl airplaneService, FlightRepository flightRepository, AirportRepository airportRepository) {
+        this.airplaneService = airplaneService;
         this.flightRepository = flightRepository;
-        this.airplaneRepository = airplaneRepository;
         this.airportRepository = airportRepository;
     }
 
@@ -63,11 +62,11 @@ public class FlightServiceImpl implements FlightService {
     private Flight linkAndSaveAssociatedEntities(FlightDTORequest flightDTORequest) {
         Flight updatedFlight = FlightMapper.INSTANCE.flightDTORequestToFlightEntity(flightDTORequest);
 
-        if (FlightValidationUtils.verifyElementInEntityToSave(updatedFlight)) {
+        if (!FlightValidationUtils.verifyElementInEntityToSave(updatedFlight)) {
             throw new GalaticsAirlinesException("Il manque un élément dans le JSON");
         }
 
-        Airplane airplane = findOrSaveAirplane(updatedFlight.getAirplane());
+        Airplane airplane = airplaneService.findOrSaveAirplane(updatedFlight.getAirplane());
         updatedFlight.setAirplane(airplane);
 
         Airport departureAirport = findOrSaveAirport(updatedFlight.getDepartureAirport());
@@ -92,16 +91,6 @@ public class FlightServiceImpl implements FlightService {
             throw new GalaticsAirlinesException("Aucun vol en base");
         }
     }
-
-    private Airplane findOrSaveAirplane(Airplane airplane) {
-        return airplaneRepository.findByBrandAndModelAndManufacturingYear(
-                airplane.getBrand(),
-                airplane.getModel(),
-                airplane.getManufacturingYear()
-        ).orElseGet(() -> airplaneRepository.save(airplane));
-    }
-
-
 
     private Airport findOrSaveAirport(Airport airport) {
         return airportRepository.findByAirportNameAndCountryAndCity(
