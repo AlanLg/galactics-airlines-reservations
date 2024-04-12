@@ -1,23 +1,12 @@
 package com.galactics.airlines.reservations.service;
 
-import com.galactics.airlines.reservations.model.entity.Airport;
-import com.galactics.airlines.reservations.repository.AirportRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
+import com.galactics.airlines.reservations.model.dto.request.AirportDTORequest;
+import com.galactics.airlines.reservations.model.dto.response.AirportDTOResponse;
+import jakarta.transaction.Transactional;
 
-import java.util.List;
+@Transactional
+public interface AirportService {
 
-@Service
-public class AirportService {
-
-    private final AirportRepository airportRepository;
-
-    @Autowired
-    public AirportService(AirportRepository airportRepository) {
-        this.airportRepository = airportRepository;
-    }
-
-    public List<Airport> getAllAirports() {
-        return airportRepository.findAll();
-    }
+    AirportDTOResponse addAirport(AirportDTORequest airportDTORequest) throws GalaticsAirlinesException;
 }
