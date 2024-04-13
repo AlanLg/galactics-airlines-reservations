@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 
 @Transactional
 public interface AirportService {
-
     AirportDTOResponse addAirport(AirportDTORequest airportDTORequest) throws GalaticsAirlinesException;
+    AirportDTOResponse updateAirport(Long id, AirportDTORequest airportDTORequest) throws GalaticsAirlinesException;
+    void deleteAirport(Long id) throws GalaticsAirlinesException;
 }

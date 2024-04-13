@@ -1,15 +1,12 @@
 package com.galactics.airlines.reservations.service.impl;
 
 import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
-import com.galactics.airlines.reservations.mapper.AirplaneMapper;
 import com.galactics.airlines.reservations.mapper.AirportMapper;
 import com.galactics.airlines.reservations.model.dto.request.AirportDTORequest;
 import com.galactics.airlines.reservations.model.dto.response.AirportDTOResponse;
-import com.galactics.airlines.reservations.model.entity.Airplane;
 import com.galactics.airlines.reservations.model.entity.Airport;
 import com.galactics.airlines.reservations.repository.AirportRepository;
 import com.galactics.airlines.reservations.service.AirportService;
-import com.galactics.airlines.reservations.service.utils.AirplaneValidationUtils;
 import com.galactics.airlines.reservations.service.utils.AirportValidationUtils;
 import org.springframework.stereotype.Service;
 
@@ -35,9 +32,40 @@ public class AirportServiceImpl implements AirportService {
         Optional<Airport> existingAirport = airportRepository.findByAirportNameAndCountryAndCity(createdAirport.getAirportName(), createdAirport.getCountry(), createdAirport.getCity());
 
         if (existingAirport.isPresent()) {
-            return AirportMapper.INSTANCE.airportEntityToAirportDTORequest(existingAirport.get());
+            return AirportMapper.INSTANCE.airportEntityToAirportDTOResponse(existingAirport.get());
         }
 
-        return AirportMapper.INSTANCE.airportEntityToAirportDTORequest(airportRepository.save(createdAirport));
+        return AirportMapper.INSTANCE.airportEntityToAirportDTOResponse(airportRepository.save(createdAirport));
+    }
+
+    @Override
+    public AirportDTOResponse updateAirport(Long id, AirportDTORequest airportDTORequest) throws GalaticsAirlinesException {
+        if (id == null || airportRepository.findById(id).isEmpty()) {
+            throw new GalaticsAirlinesException("Aucun vol en bdd");
+        }
+
+        Airport updatedAirport = AirportMapper.INSTANCE.airportDTORequestToAirportEntity(airportDTORequest);
+
+        if (!AirportValidationUtils.isValidAirport(updatedAirport)) {
+            throw new GalaticsAirlinesException("Il manque un élément dans le JSON");
+        }
+
+        updatedAirport.setAirportId(id);
+        airportRepository.save(updatedAirport);
+        return AirportMapper.INSTANCE.airportEntityToAirportDTOResponse(updatedAirport);
+    }
+
+    @Override
+    public void deleteAirport(Long id) throws GalaticsAirlinesException {
+        if (id == null) {
+            throw new GalaticsAirlinesException("Il manque un élément dans le JSON");
+        }
+
+        Airport airport = airportRepository.findById(id).orElse(null);
+        if (airport != null) {
+            airportRepository.delete(airport);
+        } else {
+            throw new GalaticsAirlinesException("Aucun aeroport en base");
+        }
     }
 }

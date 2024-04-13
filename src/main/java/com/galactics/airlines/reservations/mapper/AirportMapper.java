@@ -21,5 +21,5 @@ public interface AirportMapper {
     @Mapping(source = "airportName", target = "airportName")
     @Mapping(source = "country", target = "country")
     @Mapping(source = "city", target = "city")
-    AirportDTOResponse airportEntityToAirportDTORequest(Airport airport);
+    AirportDTOResponse airportEntityToAirportDTOResponse(Airport airport);
 }
