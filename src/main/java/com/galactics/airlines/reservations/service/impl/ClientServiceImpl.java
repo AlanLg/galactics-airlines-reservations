@@ -8,11 +8,13 @@ import com.galactics.airlines.reservations.model.entity.Client;
 import com.galactics.airlines.reservations.repository.ClientRepository;
 import com.galactics.airlines.reservations.service.ClientService;
 import com.galactics.airlines.reservations.service.utils.ClientValidationUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;

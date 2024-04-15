@@ -4,9 +4,11 @@ import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
 import com.galactics.airlines.reservations.model.dto.request.ClientDTORequest;
 import com.galactics.airlines.reservations.model.dto.response.ClientDTOResponse;
 import com.galactics.airlines.reservations.service.ClientService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/client")
 public class ClientController {
@@ -18,6 +20,7 @@ public class ClientController {
 
     @PostMapping("/add")
     public ResponseEntity<ClientDTOResponse> addClient(@RequestBody ClientDTORequest clientDTORequest) throws GalaticsAirlinesException {
+        log.info("Adding client: {}", clientDTORequest.toString());
         return ResponseEntity.ok(clientService.addClient(clientDTORequest));
     }
 

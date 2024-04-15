@@ -9,13 +9,12 @@ import static com.galactics.airlines.reservations.service.utils.ValidationUtils.
 public class ClientValidationUtils {
     public static boolean isValidClient(Client client) {
         return client != null &&
-                Objects.nonNull(client.getId()) &&
                 isNotEmpty(client.getFirstname()) &&
                 isNotEmpty(client.getLastname()) &&
                 isNotEmpty(client.getAddress()) &&
                 isNotEmpty(client.getEmail()) &&
                 isNotEmpty(client.getPhoneNumber()) &&
-                isNotEmpty(client.getPassportNumber()) &&
-                Objects.nonNull(client.getBirthday());
+                isNotEmpty(client.getPassportNumber());
+//                Objects.nonNull(client.getBirthday());
     }
 }

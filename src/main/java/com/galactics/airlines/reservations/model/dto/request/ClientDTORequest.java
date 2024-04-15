@@ -1,10 +1,12 @@
 package com.galactics.airlines.reservations.model.dto.request;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
 
+@Data
 @Getter @Setter
 public class ClientDTORequest {
     private String firstname;

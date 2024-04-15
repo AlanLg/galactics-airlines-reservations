@@ -1,7 +1,5 @@
 package com.galactics.airlines.reservations.service.utils;
 
-import com.galactics.airlines.reservations.model.entity.Airplane;
-import com.galactics.airlines.reservations.model.entity.Airport;
 import com.galactics.airlines.reservations.model.entity.Flight;
 import lombok.experimental.UtilityClass;
 
