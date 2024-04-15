@@ -41,7 +41,7 @@ public class AirportServiceImpl implements AirportService {
     @Override
     public AirportDTOResponse updateAirport(Long id, AirportDTORequest airportDTORequest) throws GalaticsAirlinesException {
         if (id == null || airportRepository.findById(id).isEmpty()) {
-            throw new GalaticsAirlinesException("Aucun vol en bdd");
+            throw new GalaticsAirlinesException("Aucun airport en bdd");
         }
 
         Airport updatedAirport = AirportMapper.INSTANCE.airportDTORequestToAirportEntity(airportDTORequest);
