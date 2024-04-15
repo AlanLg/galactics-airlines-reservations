@@ -17,17 +17,17 @@ public class ClientController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ClientDTOResponse> addFlight(@RequestBody ClientDTORequest clientDTORequest) throws GalaticsAirlinesException {
+    public ResponseEntity<ClientDTOResponse> addClient(@RequestBody ClientDTORequest clientDTORequest) throws GalaticsAirlinesException {
         return ResponseEntity.ok(clientService.addClient(clientDTORequest));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<ClientDTOResponse> updateFlight(@PathVariable Long id, @RequestBody ClientDTORequest clientDTORequest) throws GalaticsAirlinesException {
+    public ResponseEntity<ClientDTOResponse> updateClient(@PathVariable Long id, @RequestBody ClientDTORequest clientDTORequest) throws GalaticsAirlinesException {
         return ResponseEntity.ok(clientService.updateClient(id, clientDTORequest));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteFlight(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
         try {
             clientService.deleteClient(id);
             return ResponseEntity.accepted().build();
