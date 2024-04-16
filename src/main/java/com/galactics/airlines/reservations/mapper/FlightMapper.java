@@ -7,6 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper
 public interface FlightMapper {
     FlightMapper INSTANCE = Mappers.getMapper(FlightMapper.class);
@@ -29,4 +31,7 @@ public interface FlightMapper {
     @Mapping(source = "arrivalAirport", target = "arrivalAirport")
     @Mapping(source = "airplane", target = "airplane")
     FlightDTOResponse flightEntityToFlightDTOResponse(Flight flight);
+
+    List<FlightDTOResponse> flightEntitiesToFlightDTOResponses(List<Flight> flights);
+
 }

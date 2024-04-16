@@ -1,11 +1,14 @@
 package com.galactics.airlines.reservations.controller;
 
+import com.galactics.airlines.reservations.model.dto.request.FilterFlightDTORequest;
 import com.galactics.airlines.reservations.model.dto.request.FlightDTORequest;
 import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
 import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
 import com.galactics.airlines.reservations.service.FlightService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/flight")
@@ -34,5 +37,10 @@ public class FlightController {
         } catch (GalaticsAirlinesException e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<FlightDTOResponse>> searchFlight (@RequestBody FilterFlightDTORequest filterFlightDTORequest) {
+        return ResponseEntity.ok(flightService.searchFlight(filterFlightDTORequest));
     }
 }
