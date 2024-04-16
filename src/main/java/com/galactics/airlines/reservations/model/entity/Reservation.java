@@ -3,8 +3,10 @@ package com.galactics.airlines.reservations.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
 public class Reservation {
     @Id
