@@ -7,6 +7,9 @@ import com.galactics.airlines.reservations.model.dto.response.AirplaneDTORespons
 import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
 import com.galactics.airlines.reservations.service.AirplaneService;
 import com.galactics.airlines.reservations.service.FlightService;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @RequestMapping("/airplane")
+@OpenAPIDefinition(info = @Info(title = "Galatics Airlines API", version = "v1"))
+@SecurityRequirement(name = "basicAuth")
 public class AirplaneController {
     private final AirplaneService airplaneService;
 
