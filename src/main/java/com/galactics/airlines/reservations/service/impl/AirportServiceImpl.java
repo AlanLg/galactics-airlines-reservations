@@ -7,7 +7,7 @@ import com.galactics.airlines.reservations.model.dto.response.AirportDTOResponse
 import com.galactics.airlines.reservations.model.entity.Airport;
 import com.galactics.airlines.reservations.repository.AirportRepository;
 import com.galactics.airlines.reservations.service.AirportService;
-import com.galactics.airlines.reservations.service.utils.AirportValidationUtils;
+import com.galactics.airlines.reservations.utils.AirportValidationUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

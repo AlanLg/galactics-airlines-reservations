@@ -7,7 +7,7 @@ import com.galactics.airlines.reservations.model.dto.response.ClientDTOResponse;
 import com.galactics.airlines.reservations.model.entity.Client;
 import com.galactics.airlines.reservations.repository.ClientRepository;
 import com.galactics.airlines.reservations.service.ClientService;
-import com.galactics.airlines.reservations.service.utils.ClientValidationUtils;
+import com.galactics.airlines.reservations.utils.ClientValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

@@ -11,8 +11,8 @@ import com.galactics.airlines.reservations.model.entity.Flight;
 import com.galactics.airlines.reservations.repository.AirportRepository;
 import com.galactics.airlines.reservations.repository.FlightRepository;
 import com.galactics.airlines.reservations.service.FlightService;
-import com.galactics.airlines.reservations.service.utils.FlightValidationUtils;
-import com.galactics.airlines.reservations.service.utils.ValidationUtils;
+import com.galactics.airlines.reservations.utils.FlightValidationUtils;
+import com.galactics.airlines.reservations.utils.ValidationUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

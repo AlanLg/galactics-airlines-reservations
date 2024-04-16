@@ -1,10 +1,8 @@
-package com.galactics.airlines.reservations.service.utils;
+package com.galactics.airlines.reservations.utils;
 
 import com.galactics.airlines.reservations.model.entity.Client;
 
-import java.util.Objects;
-
-import static com.galactics.airlines.reservations.service.utils.ValidationUtils.isNotEmpty;
+import static com.galactics.airlines.reservations.utils.ValidationUtils.isNotEmpty;
 
 public class ClientValidationUtils {
     public static boolean isValidClient(Client client) {

@@ -1,4 +1,4 @@
-package com.galactics.airlines.reservations.service.utils;
+package com.galactics.airlines.reservations.utils;
 
 import lombok.experimental.UtilityClass;
 
