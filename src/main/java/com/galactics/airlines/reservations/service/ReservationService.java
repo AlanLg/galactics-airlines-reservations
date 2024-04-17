@@ -1,23 +1,10 @@
 package com.galactics.airlines.reservations.service;
 
-import com.galactics.airlines.reservations.model.entity.Reservation;
-import com.galactics.airlines.reservations.repository.ReservationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.galactics.airlines.reservations.model.dto.request.ReservationDTORequestWithNoExistingClient;
+import com.galactics.airlines.reservations.model.dto.response.ReservationDTOResponse;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class ReservationService {
-    private final ReservationRepository reservationRepository;
-
-
-    @Autowired
-    public ReservationService(ReservationRepository reservationRepository) {
-        this.reservationRepository = reservationRepository;
-    }
-
-    public List<Reservation> getAllReservations() {
-        return reservationRepository.findAll();
-    }
+public interface ReservationService {
+    ReservationDTOResponse createReservation(ReservationDTORequestWithNoExistingClient reservationDTORequestWithNoExistingClient);
 }

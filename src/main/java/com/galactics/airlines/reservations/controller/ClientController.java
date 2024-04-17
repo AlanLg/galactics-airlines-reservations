@@ -31,11 +31,13 @@ public class ClientController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<ClientDTOResponse> updateClient(@PathVariable Long id, @RequestBody ClientDTORequest clientDTORequest) throws GalaticsAirlinesException {
+        log.info("Updating client: {}", clientDTORequest.toString());
         return ResponseEntity.ok(clientService.updateClient(id, clientDTORequest));
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
+        log.info("Deleting client {}", id);
         try {
             clientService.deleteClient(id);
             return ResponseEntity.accepted().build();

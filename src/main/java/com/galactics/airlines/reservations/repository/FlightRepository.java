@@ -18,4 +18,11 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
             Airport arrivalAirport,
             Airplane airplane
     );
+
+    Optional<Flight> findByDepartureCityAndArrivalCityAndDepartureDateTimeAndArrivalDateTime(
+            String departureCity,
+            String arrivalCity,
+            String departureDateTime,
+            String arrivalDateTime
+    );
 }

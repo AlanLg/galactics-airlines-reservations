@@ -4,6 +4,7 @@ import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
 import com.galactics.airlines.reservations.mapper.FlightMapper;
 import com.galactics.airlines.reservations.model.dto.request.FilterFlightDTORequest;
 import com.galactics.airlines.reservations.model.dto.request.FlightDTORequest;
+import com.galactics.airlines.reservations.model.dto.request.ReservationDTORequestWithNoExistingClient;
 import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
 import com.galactics.airlines.reservations.model.entity.Airplane;
 import com.galactics.airlines.reservations.model.entity.Airport;
@@ -129,6 +130,16 @@ public class FlightServiceImpl implements FlightService {
         }
 
         return FlightMapper.INSTANCE.flightEntitiesToFlightDTOResponses(flights);
+    }
+
+    @Override
+    public Flight getFlightForReservation(ReservationDTORequestWithNoExistingClient reservationDTORequest) {
+        return flightRepository.findByDepartureCityAndArrivalCityAndDepartureDateTimeAndArrivalDateTime(
+                reservationDTORequest.getDepartureCity(),
+                reservationDTORequest.getArrivalCity(),
+                reservationDTORequest.getDepartureDateTime(),
+                reservationDTORequest.getArrivalDateTime()
+        ).orElseThrow(() -> new GalaticsAirlinesException("Aucun vol correspondant"));
     }
 
     private List<Flight> filterByStartDate(List<Flight> flights, String startDate) {

@@ -2,7 +2,9 @@ package com.galactics.airlines.reservations.service.impl;
 
 import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
 import com.galactics.airlines.reservations.mapper.ClientMapper;
+import com.galactics.airlines.reservations.mapper.ReservationMapper;
 import com.galactics.airlines.reservations.model.dto.request.ClientDTORequest;
+import com.galactics.airlines.reservations.model.dto.request.ReservationDTORequestWithNoExistingClient;
 import com.galactics.airlines.reservations.model.dto.response.ClientDTOResponse;
 import com.galactics.airlines.reservations.model.entity.Client;
 import com.galactics.airlines.reservations.repository.ClientRepository;
@@ -69,5 +71,12 @@ public class ClientServiceImpl implements ClientService {
         } else {
             throw new GalaticsAirlinesException("Aucun client en base");
         }
+    }
+
+    @Override
+    public Client createClientForReservation(ReservationDTORequestWithNoExistingClient reservationDTORequestWithNoExistingClient) {
+        ClientDTORequest clientDTORequest = ReservationMapper.INSTANCE.reservationDTORequestToClientDTORequest(reservationDTORequestWithNoExistingClient);
+        ClientDTOResponse clientDTOResponse = addClient(clientDTORequest);
+        return ClientMapper.INSTANCE.clientDTOResponseToClientEntity(clientDTOResponse);
     }
 }

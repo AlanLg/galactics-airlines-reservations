@@ -29,4 +29,14 @@ public interface ClientMapper {
     @Mapping(source = "birthday", target = "birthday")
     @Mapping(source = "passportNumber", target = "passportNumber")
     ClientDTOResponse clientEntityToClientDTOResponse(Client client);
+
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "firstname", target = "firstname")
+    @Mapping(source = "lastname", target = "lastname")
+    @Mapping(source = "address", target = "address")
+    @Mapping(source = "email", target = "email")
+    @Mapping(source = "phoneNumber", target = "phoneNumber")
+    @Mapping(source = "birthday", target = "birthday")
+    @Mapping(source = "passportNumber", target = "passportNumber")
+    Client clientDTOResponseToClientEntity(ClientDTOResponse clientDTOResponse);
 }

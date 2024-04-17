@@ -13,6 +13,5 @@ public class ClientValidationUtils {
                 isNotEmpty(client.getEmail()) &&
                 isNotEmpty(client.getPhoneNumber()) &&
                 isNotEmpty(client.getPassportNumber());
-//                Objects.nonNull(client.getBirthday());
     }
 }
