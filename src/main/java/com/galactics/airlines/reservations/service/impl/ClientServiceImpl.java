@@ -34,7 +34,7 @@ public class ClientServiceImpl implements ClientService {
         Client createdClient = ClientMapper.INSTANCE.clientDTORequestToClientEntity(clientDTORequest);
 
         if (!ClientValidationUtils.isValidClient(createdClient)) {
-            throw new GalacticsAirlinesException("Il manque un élément dans le JSON");
+            throw new GalacticsAirlinesException("missing elements in the JSON");
         }
 
         Optional<Client> existingClient = clientRepository.findByEmail(createdClient.getEmail());
@@ -58,7 +58,7 @@ public class ClientServiceImpl implements ClientService {
         Client updatedClient = ClientMapper.INSTANCE.clientDTORequestToClientEntity(clientDTORequest);
 
         if (!ClientValidationUtils.isValidClient(updatedClient)) {
-            throw new GalacticsAirlinesException("Il manque un élément dans le JSON");
+            throw new GalacticsAirlinesException("missing elements in the JSON");
         }
 
         updatedClient.setId(id);
@@ -69,7 +69,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void deleteClient(Long id) throws GalacticsAirlinesException {
         if (id == null) {
-            throw new GalacticsAirlinesException("Il manque un élément dans le JSON");
+            throw new GalacticsAirlinesException("missing elements in the JSON");
         }
 
         Client client = clientRepository.findById(id).orElse(null);

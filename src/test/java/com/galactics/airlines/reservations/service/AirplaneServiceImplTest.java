@@ -103,7 +103,7 @@ public class AirplaneServiceImplTest {
             airplaneService.addAirplane(null);
             fail("Expected GalaticsAirlinesException was not thrown");
         } catch (GalacticsAirlinesException e) {
-            assertEquals("Il manque un élément dans le JSON", e.getMessage());
+            assertEquals("missing elements in the JSON", e.getMessage());
         }
     }
 
@@ -114,7 +114,7 @@ public class AirplaneServiceImplTest {
             airplaneService.addAirplane(airplaneDTORequest);
             fail("Expected GalaticsAirlinesException was not thrown");
         } catch (GalacticsAirlinesException e) {
-            assertEquals("Il manque un élément dans le JSON", e.getMessage());
+            assertEquals("missing elements in the JSON", e.getMessage());
         }
     }
 
@@ -126,7 +126,7 @@ public class AirplaneServiceImplTest {
             airplaneService.updateAirplane(id, airplaneDTORequest);
             fail("Expected GalaticsAirlinesException was not thrown");
         } catch (GalacticsAirlinesException e) {
-            assertEquals("Aucun vol en bdd", e.getMessage());
+            assertEquals("No flight found in the database", e.getMessage());
         }
     }
 
@@ -140,7 +140,7 @@ public class AirplaneServiceImplTest {
             airplaneService.updateAirplane(id, airplaneDTORequest);
             fail("Expected GalaticsAirlinesException was not thrown");
         } catch (GalacticsAirlinesException e) {
-            assertEquals("Aucun vol en bdd", e.getMessage());
+            assertEquals("No flight found in the database", e.getMessage());
         }
     }
 
@@ -150,7 +150,7 @@ public class AirplaneServiceImplTest {
             airplaneService.deleteAirplane(null);
             fail("Expected GalaticsAirlinesException was not thrown");
         } catch (GalacticsAirlinesException e) {
-            assertEquals("Il manque un élément dans le JSON", e.getMessage());
+            assertEquals("missing elements in the JSON", e.getMessage());
         }
     }
 
@@ -163,7 +163,7 @@ public class AirplaneServiceImplTest {
             airplaneService.deleteAirplane(id);
             fail("Expected GalaticsAirlinesException was not thrown");
         } catch (GalacticsAirlinesException e) {
-            assertEquals("Aucun vol en base", e.getMessage());
+            assertEquals("No flight in the data base", e.getMessage());
         }
     }
 

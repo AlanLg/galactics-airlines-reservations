@@ -24,13 +24,13 @@ public class AirportServiceImpl implements AirportService {
     @Override
     public AirportDTOResponse getAirport(Long id) throws GalacticsAirlinesException {
         if (id == null) {
-            throw new GalacticsAirlinesException("Il manque un élément dans le json");
+            throw new GalacticsAirlinesException("missing elements in the JSON");
         }
 
         Airport targetAirport = airportRepository.findById(id).orElse(null);
 
         if (targetAirport == null) {
-            throw new GalacticsAirlinesException("Aucun flight en bdd");
+            throw new GalacticsAirlinesException("No flight in the data base");
         }
         return AirportMapper.INSTANCE.airportEntityToAirportDTOResponse(targetAirport);
     }
@@ -40,7 +40,7 @@ public class AirportServiceImpl implements AirportService {
         Airport createdAirport = AirportMapper.INSTANCE.airportDTORequestToAirportEntity(airportDTORequest);
 
         if (!AirportValidationUtils.isValidAirport(createdAirport)) {
-            throw new GalacticsAirlinesException("Il manque un élément dans le JSON");
+            throw new GalacticsAirlinesException("missing elements in the JSON");
         }
 
         Optional<Airport> existingAirport = airportRepository.findByAirportNameAndCountryAndCity(createdAirport.getAirportName(), createdAirport.getCountry(), createdAirport.getCity());
@@ -61,7 +61,7 @@ public class AirportServiceImpl implements AirportService {
         Airport updatedAirport = AirportMapper.INSTANCE.airportDTORequestToAirportEntity(airportDTORequest);
 
         if (!AirportValidationUtils.isValidAirport(updatedAirport)) {
-            throw new GalacticsAirlinesException("Il manque un élément dans le JSON");
+            throw new GalacticsAirlinesException("missing elements in the JSON");
         }
 
         updatedAirport.setAirportId(id);
@@ -72,7 +72,7 @@ public class AirportServiceImpl implements AirportService {
     @Override
     public void deleteAirport(Long id) throws GalacticsAirlinesException {
         if (id == null) {
-            throw new GalacticsAirlinesException("Il manque un élément dans le JSON");
+            throw new GalacticsAirlinesException("missing elements in the JSON");
         }
 
         Airport airport = airportRepository.findById(id).orElse(null);

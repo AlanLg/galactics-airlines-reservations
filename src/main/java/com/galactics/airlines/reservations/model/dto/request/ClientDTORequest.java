@@ -3,6 +3,7 @@ package com.galactics.airlines.reservations.model.dto.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -28,7 +29,7 @@ public class ClientDTORequest {
     @NotBlank(message = "phonenumber is mandatory")
     private String phoneNumber;
     @Schema(example = "11/11/1990")
-    @NotBlank(message = "birthday is mandatory")
+    @NotNull(message = "birthday is mandatory")
     private Date birthday;
     @Schema(example = "1234567890")
     @NotBlank(message = "passportNumber is mandatory")

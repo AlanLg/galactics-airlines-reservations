@@ -63,7 +63,7 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public FlightDTOResponse updateFlight(Long id, FlightDTORequest flightDTORequest) throws GalacticsAirlinesException {
         if (id == null || flightRepository.findById(id).isEmpty()) {
-            throw new GalacticsAirlinesException("Aucun vol en bdd");
+            throw new GalacticsAirlinesException("No flight found in the database");
         }
 
         Flight updatedFlight = linkAndSaveAssociatedEntities(flightDTORequest);;
@@ -76,7 +76,7 @@ public class FlightServiceImpl implements FlightService {
         Flight updatedFlight = FlightMapper.INSTANCE.flightDTORequestToFlightEntity(flightDTORequest);
 
         if (!FlightValidationUtils.verifyElementInEntityToSave(updatedFlight)) {
-            throw new GalacticsAirlinesException("Il manque un élément dans le JSON");
+            throw new GalacticsAirlinesException("missing elements in the JSON");
         }
 
         Airplane airplane = airplaneService.findOrSaveAirplane(updatedFlight.getAirplane());
@@ -94,14 +94,14 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public void deleteFlight(Long id) {
         if (id == null) {
-            throw new GalacticsAirlinesException("Il manque un élément dans le JSON");
+            throw new GalacticsAirlinesException("missing elements in the JSON");
         }
 
         Flight flight = flightRepository.findById(id).orElse(null);
         if (flight != null) {
             flightRepository.delete(flight);
         } else {
-            throw new GalacticsAirlinesException("Aucun vol en base");
+            throw new GalacticsAirlinesException("No flight in the data base");
         }
     }
 
@@ -154,13 +154,13 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public FlightDTOResponse getFlight(Long id) throws GalacticsAirlinesException {
         if (id == null) {
-            throw new GalacticsAirlinesException("Il manque un élément dans le json");
+            throw new GalacticsAirlinesException("missing elements in the JSON");
         }
 
         Flight targetFlight = flightRepository.findById(id).orElse(null);
 
         if (targetFlight == null) {
-            throw new GalacticsAirlinesException("Aucun flight en bdd");
+            throw new GalacticsAirlinesException("No flight in the data base");
         }
         return FlightMapper.INSTANCE.flightEntityToFlightDTOResponse(targetFlight);
     }

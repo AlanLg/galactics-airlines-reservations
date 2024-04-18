@@ -25,7 +25,7 @@ public class AirplaneServiceImpl implements AirplaneService {
         Airplane createdAirplane = AirplaneMapper.INSTANCE.airplaneDTORequestToAirplaneEntity(airplaneDTORequest);
 
         if (!AirplaneValidationUtils.isValidAirplane(createdAirplane)) {
-            throw new GalacticsAirlinesException("Il manque un élément dans le JSON");
+            throw new GalacticsAirlinesException("missing element in the JSON");
         }
 
         Optional<Airplane> existingAirplane = airplaneRepository.findByBrandAndModelAndManufacturingYear(createdAirplane.getBrand(), createdAirplane.getModel(), createdAirplane.getManufacturingYear());
@@ -40,13 +40,13 @@ public class AirplaneServiceImpl implements AirplaneService {
     @Override
     public AirplaneDTOResponse updateAirplane(Long id, AirplaneDTORequest airplaneDTORequest) {
         if (id == null || airplaneRepository.findById(id).isEmpty()) {
-            throw new GalacticsAirlinesException("Aucun vol en bdd");
+            throw new GalacticsAirlinesException("No flight found in the database");
         }
 
         Airplane updatedAirplane = AirplaneMapper.INSTANCE.airplaneDTORequestToAirplaneEntity(airplaneDTORequest);
 
         if (!AirplaneValidationUtils.isValidAirplane(updatedAirplane)) {
-            throw new GalacticsAirlinesException("Il manque un élément dans le JSON");
+            throw new GalacticsAirlinesException("missing elements in the JSON");
         }
 
         updatedAirplane.setAirplaneId(id);
@@ -58,27 +58,27 @@ public class AirplaneServiceImpl implements AirplaneService {
     @Override
     public void deleteAirplane(Long id) {
         if (id == null) {
-            throw new GalacticsAirlinesException("Il manque un élément dans le JSON");
+            throw new GalacticsAirlinesException("missing elements in the JSON");
         }
 
         Airplane airplane = airplaneRepository.findById(id).orElse(null);
         if (airplane != null) {
             airplaneRepository.delete(airplane);
         } else {
-            throw new GalacticsAirlinesException("Aucun vol en base");
+            throw new GalacticsAirlinesException("No flight in the data base");
         }
     }
 
     @Override
     public AirplaneDTOResponse getAirplane(Long id) throws GalacticsAirlinesException {
         if (id == null) {
-            throw new GalacticsAirlinesException("Il manque un élément dans le json");
+            throw new GalacticsAirlinesException("missing elements in the JSON");
         }
 
         Airplane targetAirplane = airplaneRepository.findById(id).orElse(null);
 
         if (targetAirplane == null) {
-            throw new GalacticsAirlinesException("Aucun flight en bdd");
+            throw new GalacticsAirlinesException("No flight in the data base");
         }
         return AirplaneMapper.INSTANCE.airplaneEntityToAirplaneDTOResponse(targetAirplane);
     }
