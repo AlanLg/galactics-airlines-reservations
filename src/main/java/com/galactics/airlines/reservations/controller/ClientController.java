@@ -31,7 +31,7 @@ public class ClientController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<ClientDTOResponse> updateClient(@PathVariable Long id, @RequestBody ClientDTORequest clientDTORequest) throws GalacticsAirlinesException {
+    public ResponseEntity<ClientDTOResponse> updateClient(@PathVariable Long id, @Valid @RequestBody ClientDTORequest clientDTORequest) throws GalacticsAirlinesException {
         log.info("Updating client: {}", clientDTORequest.toString());
         return ResponseEntity.ok(clientService.updateClient(id, clientDTORequest));
     }

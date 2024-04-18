@@ -30,7 +30,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientDTOResponse addClient(@Valid ClientDTORequest clientDTORequest) throws GalacticsAirlinesException {
+    public ClientDTOResponse addClient(ClientDTORequest clientDTORequest) throws GalacticsAirlinesException {
         Client createdClient = ClientMapper.INSTANCE.clientDTORequestToClientEntity(clientDTORequest);
 
         if (!ClientValidationUtils.isValidClient(createdClient)) {
