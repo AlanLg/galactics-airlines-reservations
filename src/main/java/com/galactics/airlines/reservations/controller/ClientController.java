@@ -7,6 +7,7 @@ import com.galactics.airlines.reservations.service.ClientService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class ClientController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ClientDTOResponse> addClient(@RequestBody ClientDTORequest clientDTORequest) throws GalaticsAirlinesException {
+    public ResponseEntity<ClientDTOResponse> addClient(@Valid @RequestBody ClientDTORequest clientDTORequest) throws GalaticsAirlinesException {
         log.info("Adding client: {}", clientDTORequest.toString());
         return ResponseEntity.ok(clientService.addClient(clientDTORequest));
     }

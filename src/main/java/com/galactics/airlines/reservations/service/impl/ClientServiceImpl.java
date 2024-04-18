@@ -1,5 +1,6 @@
 package com.galactics.airlines.reservations.service.impl;
 
+import com.galactics.airlines.reservations.exception.ClientAlreadyExistsException;
 import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
 import com.galactics.airlines.reservations.mapper.ClientMapper;
 import com.galactics.airlines.reservations.mapper.ReservationMapper;
@@ -10,6 +11,7 @@ import com.galactics.airlines.reservations.model.entity.Client;
 import com.galactics.airlines.reservations.repository.ClientRepository;
 import com.galactics.airlines.reservations.service.ClientService;
 import com.galactics.airlines.reservations.utils.ClientValidationUtils;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +28,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientDTOResponse addClient(ClientDTORequest clientDTORequest) throws GalaticsAirlinesException {
+    public ClientDTOResponse addClient(@Valid ClientDTORequest clientDTORequest) throws GalaticsAirlinesException {
         Client createdClient = ClientMapper.INSTANCE.clientDTORequestToClientEntity(clientDTORequest);
 
         if (!ClientValidationUtils.isValidClient(createdClient)) {
@@ -36,10 +38,13 @@ public class ClientServiceImpl implements ClientService {
         Optional<Client> existingClient = clientRepository.findByEmail(createdClient.getEmail());
 
         if (existingClient.isPresent()) {
-            return ClientMapper.INSTANCE.clientEntityToClientDTOResponse(existingClient.get());
+            log.info("Client already exists with email: {}", createdClient.getEmail());
+            throw new ClientAlreadyExistsException();
         }
 
-        return ClientMapper.INSTANCE.clientEntityToClientDTOResponse(clientRepository.save(createdClient));
+        log.info("created client: {}", createdClient);
+        Client client = clientRepository.save(createdClient);
+        return ClientMapper.INSTANCE.clientEntityToClientDTOResponse(client);
     }
 
     @Override
