@@ -22,7 +22,7 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
     Optional<Flight> findByDepartureCityAndArrivalCityAndDepartureDateTimeAndArrivalDateTime(
             String departureCity,
             String arrivalCity,
-            String departureDateTime,
-            String arrivalDateTime
+            LocalDateTime departureDateTime,
+            LocalDateTime arrivalDateTime
     );
 }

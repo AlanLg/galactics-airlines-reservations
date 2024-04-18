@@ -19,6 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -61,8 +62,8 @@ public class FlightServiceImplTest {
         FlightDTORequest request = new FlightDTORequest();
         request.setDepartureCity("TestCity");
         request.setArrivalCity("TestCity");
-        request.setDepartureDateTime("2024-04-12T08:00:00");
-        request.setArrivalDateTime("2024-04-12T08:00:00");
+        request.setDepartureDateTime(LocalDateTime.now());
+        request.setArrivalDateTime(LocalDateTime.now());
         request.setNumberOfSeats(500);
         request.setDepartureAirport(airport);
         request.setArrivalAirport(airport);
@@ -97,8 +98,8 @@ public class FlightServiceImplTest {
         FlightDTORequest request = new FlightDTORequest();
         request.setDepartureCity("TestCity");
         request.setArrivalCity("TestCity");
-        request.setDepartureDateTime("2024-04-12T08:00:00");
-        request.setArrivalDateTime("2024-04-12T08:00:00");
+        request.setDepartureDateTime(LocalDateTime.now());
+        request.setArrivalDateTime(LocalDateTime.now());
         request.setNumberOfSeats(500);
         request.setDepartureAirport(airport);
         request.setArrivalAirport(airport);
@@ -155,11 +156,11 @@ public class FlightServiceImplTest {
     @Test
     void testSearchFlight_WithStartDateFilter() throws GalaticsAirlinesException {
         Flight flight1 = new Flight();
-        flight1.setDepartureDateTime("2024-04-12T08:00:00");
+        flight1.setDepartureDateTime(LocalDateTime.of(2024, 1, 1, 1, 1));
         Flight flight2 = new Flight();
-        flight2.setDepartureDateTime("2024-04-12T08:00:00");
+        flight2.setDepartureDateTime(LocalDateTime.of(2024, 1, 1, 1, 1));
         FilterFlightDTORequest filter = new FilterFlightDTORequest();
-        filter.setStartDate(Optional.of("2024-04-12T08:00:00"));
+        filter.setStartDate(Optional.of(LocalDateTime.of(2024, 1, 1, 1, 1)));
         List<Flight> flights = Arrays.asList(flight1, flight2);
         when(flightRepository.findAll()).thenReturn(flights);
 
@@ -173,11 +174,11 @@ public class FlightServiceImplTest {
     @Test
     void testSearchFlight_WithEndDateFilter() throws GalaticsAirlinesException {
         Flight flight1 = new Flight();
-        flight1.setArrivalDateTime("2024-04-12T08:00:00");
+        flight1.setArrivalDateTime(LocalDateTime.of(2024, 1, 1, 1, 1));
         Flight flight2 = new Flight();
-        flight2.setArrivalDateTime("2024-04-12T08:00:00");
+        flight2.setArrivalDateTime(LocalDateTime.of(2024, 1, 1, 1, 1));
         FilterFlightDTORequest filter = new FilterFlightDTORequest();
-        filter.setEndDate(Optional.of("2024-04-12T08:00:00"));
+        filter.setEndDate(Optional.of(LocalDateTime.of(2024, 1, 1, 1, 1)));
         List<Flight> flights = Arrays.asList(flight1, flight2);
         when(flightRepository.findAll()).thenReturn(flights);
 

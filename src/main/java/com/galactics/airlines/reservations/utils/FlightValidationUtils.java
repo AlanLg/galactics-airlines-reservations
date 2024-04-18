@@ -12,8 +12,8 @@ public class FlightValidationUtils {
     public static boolean verifyElementInEntityToSave(Flight flight) {
         return isNotEmpty(flight.getDepartureCity()) ||
                 isNotEmpty(flight.getArrivalCity()) ||
-                isNotEmpty(flight.getDepartureDateTime()) ||
-                isNotEmpty(flight.getArrivalDateTime()) ||
+                isNotEmpty(String.valueOf(flight.getDepartureDateTime())) ||
+                isNotEmpty(String.valueOf(flight.getArrivalDateTime())) ||
                 isValidAirport(flight.getDepartureAirport()) ||
                 isValidAirport(flight.getArrivalAirport()) ||
                 isValidAirplane(flight.getAirplane());

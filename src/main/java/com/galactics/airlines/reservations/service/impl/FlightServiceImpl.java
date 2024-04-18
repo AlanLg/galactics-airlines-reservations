@@ -16,6 +16,7 @@ import com.galactics.airlines.reservations.utils.FlightValidationUtils;
 import com.galactics.airlines.reservations.utils.ValidationUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,11 +102,11 @@ public class FlightServiceImpl implements FlightService {
         List<Flight> flights = flightRepository.findAll();
 
         // Filtrer les vols en fonction des critères du filtre
-        if (filter.getStartDate() != null && filter.getStartDate().isPresent() && ValidationUtils.isNotEmpty(filter.getStartDate().get())) {
+        if (filter.getStartDate() != null && filter.getStartDate().isPresent() && ValidationUtils.isNotEmpty(String.valueOf(filter.getStartDate().get()))) {
             flights = filterByStartDate(flights, filter.getStartDate().get());
         }
 
-        if (filter.getEndDate() != null && filter.getEndDate().isPresent() && ValidationUtils.isNotEmpty(filter.getEndDate().get())) {
+        if (filter.getEndDate() != null && filter.getEndDate().isPresent() && ValidationUtils.isNotEmpty(String.valueOf(filter.getEndDate().get()))) {
             flights = filterByEndDate(flights, filter.getEndDate().get());
         }
 
@@ -142,15 +143,15 @@ public class FlightServiceImpl implements FlightService {
         ).orElseThrow(() -> new GalaticsAirlinesException("Aucun vol correspondant"));
     }
 
-    private List<Flight> filterByStartDate(List<Flight> flights, String startDate) {
+    private List<Flight> filterByStartDate(List<Flight> flights, LocalDateTime startDate) {
         return flights.stream()
-                .filter(flight -> flight.getDepartureDateTime().startsWith(startDate))
+                .filter(flight -> flight.getDepartureDateTime().isEqual(startDate))
                 .toList();
     }
 
-    private List<Flight> filterByEndDate(List<Flight> flights, String endDate) {
+    private List<Flight> filterByEndDate(List<Flight> flights, LocalDateTime endDate) {
         return flights.stream()
-                .filter(flight -> flight.getArrivalDateTime().startsWith(endDate))
+                .filter(flight -> flight.getArrivalDateTime().isEqual(endDate))
                 .toList();
     }
 
