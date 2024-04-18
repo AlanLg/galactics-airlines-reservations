@@ -9,6 +9,7 @@ import com.galactics.airlines.reservations.model.dto.request.ClientDTORequest;
 import com.galactics.airlines.reservations.model.dto.request.ReservationDTORequestWithExistingClient;
 import com.galactics.airlines.reservations.model.dto.request.ReservationDTORequestWithNoExistingClient;
 import com.galactics.airlines.reservations.model.dto.response.ClientDTOResponse;
+import com.galactics.airlines.reservations.model.entity.Airport;
 import com.galactics.airlines.reservations.model.entity.Client;
 import com.galactics.airlines.reservations.repository.ClientRepository;
 import com.galactics.airlines.reservations.service.ClientService;
@@ -87,8 +88,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client createClientForReservation(ReservationDTORequestWithNoExistingClient reservationDTORequestWithNoExistingClient) {
         ClientDTORequest clientDTORequest = ReservationMapper.INSTANCE.reservationDTORequestToClientDTORequest(reservationDTORequestWithNoExistingClient);
-        ClientDTOResponse clientDTOResponse = addClient(clientDTORequest);
-        return ClientMapper.INSTANCE.clientDTOResponseToClientEntity(clientDTOResponse);
+        return findOrSaveClient(ClientMapper.INSTANCE.clientDTORequestToClientEntity(clientDTORequest));
     }
 
     @Override
@@ -99,5 +99,11 @@ public class ClientServiceImpl implements ClientService {
                         return new ClientNotFoundException();
                     }
                 );
+    }
+
+    public Client findOrSaveClient(Client client) {
+        return clientRepository.findByEmail(
+                client.getEmail()
+        ).orElseGet(() -> clientRepository.save(client));
     }
 }

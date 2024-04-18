@@ -82,4 +82,12 @@ public class AirportServiceImpl implements AirportService {
             throw new GalacticsAirlinesException("Aucun aeroport en base");
         }
     }
+
+    public Airport findOrSaveAirport(Airport airport) {
+        return airportRepository.findByAirportNameAndCountryAndCity(
+                airport.getAirportName(),
+                airport.getCountry(),
+                airport.getCity()
+        ).orElseGet(() -> airportRepository.save(airport));
+    }
 }

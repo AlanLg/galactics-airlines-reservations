@@ -29,12 +29,4 @@ public class SecurityConfiguration {
             .httpBasic(Customizer.withDefaults());
         return http.build();
     }
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth, PasswordEncoder passwordEncoder) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("admin")
-                .password(passwordEncoder.encode("password"))
-                .roles("USER");
-    }
 }

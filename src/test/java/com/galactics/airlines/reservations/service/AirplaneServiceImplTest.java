@@ -103,7 +103,7 @@ public class AirplaneServiceImplTest {
             airplaneService.addAirplane(null);
             fail("Expected GalaticsAirlinesException was not thrown");
         } catch (GalacticsAirlinesException e) {
-            assertEquals("missing elements in the JSON", e.getMessage());
+            assertEquals("missing element in the JSON", e.getMessage());
         }
     }
 
@@ -114,7 +114,7 @@ public class AirplaneServiceImplTest {
             airplaneService.addAirplane(airplaneDTORequest);
             fail("Expected GalaticsAirlinesException was not thrown");
         } catch (GalacticsAirlinesException e) {
-            assertEquals("missing elements in the JSON", e.getMessage());
+            assertEquals("missing element in the JSON", e.getMessage());
         }
     }
 

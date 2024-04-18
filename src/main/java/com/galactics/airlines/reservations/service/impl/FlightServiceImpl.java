@@ -10,8 +10,9 @@ import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
 import com.galactics.airlines.reservations.model.entity.Airplane;
 import com.galactics.airlines.reservations.model.entity.Airport;
 import com.galactics.airlines.reservations.model.entity.Flight;
-import com.galactics.airlines.reservations.repository.AirportRepository;
+import com.galactics.airlines.reservations.model.entity.Reservation;
 import com.galactics.airlines.reservations.repository.FlightRepository;
+import com.galactics.airlines.reservations.repository.ReservationRepository;
 import com.galactics.airlines.reservations.service.FlightService;
 import com.galactics.airlines.reservations.utils.FlightValidationUtils;
 import com.galactics.airlines.reservations.utils.ValidationUtils;
@@ -27,13 +28,17 @@ import java.util.Optional;
 public class FlightServiceImpl implements FlightService {
 
     private final AirplaneServiceImpl airplaneService;
+    private final AirportServiceImpl airportService;
     private final FlightRepository flightRepository;
-    private final AirportRepository airportRepository;
 
-    public FlightServiceImpl(AirplaneServiceImpl airplaneService, FlightRepository flightRepository, AirportRepository airportRepository) {
+    private final ReservationRepository reservationRepository;
+
+
+    public FlightServiceImpl(AirplaneServiceImpl airplaneService, AirportServiceImpl airportService, FlightRepository flightRepository, ReservationRepository reservationRepository) {
         this.airplaneService = airplaneService;
+        this.airportService = airportService;
         this.flightRepository = flightRepository;
-        this.airportRepository = airportRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     @Override
@@ -82,10 +87,10 @@ public class FlightServiceImpl implements FlightService {
         Airplane airplane = airplaneService.findOrSaveAirplane(updatedFlight.getAirplane());
         updatedFlight.setAirplane(airplane);
 
-        Airport departureAirport = findOrSaveAirport(updatedFlight.getDepartureAirport());
+        Airport departureAirport = airportService.findOrSaveAirport(updatedFlight.getDepartureAirport());
         updatedFlight.setDepartureAirport(departureAirport);
 
-        Airport arrivalAirport = findOrSaveAirport(updatedFlight.getArrivalAirport());
+        Airport arrivalAirport = airportService.findOrSaveAirport(updatedFlight.getArrivalAirport());
         updatedFlight.setArrivalAirport(arrivalAirport);
 
         return updatedFlight;
@@ -98,7 +103,11 @@ public class FlightServiceImpl implements FlightService {
         }
 
         Flight flight = flightRepository.findById(id).orElse(null);
-        if (flight != null) {
+        if (flight != null ) {
+            List<Reservation> reservationsOfFlight = reservationRepository.findByFlight_FlightId(flight.getFlightId()).orElse(null);
+            if (reservationsOfFlight != null && !reservationsOfFlight.isEmpty()){
+                throw new GalacticsAirlinesException("Impossible to delete flight because some reservations are links with this flight");
+            }
             flightRepository.delete(flight);
         } else {
             throw new GalacticsAirlinesException("No flight in the data base");
@@ -205,15 +214,6 @@ public class FlightServiceImpl implements FlightService {
         return flights.stream()
                 .filter(flight -> flight.getAirplane().getBrand().equals(airplaneBrand))
                 .toList();
-    }
-
-
-    private Airport findOrSaveAirport(Airport airport) {
-        return airportRepository.findByAirportNameAndCountryAndCity(
-                airport.getAirportName(),
-                airport.getCountry(),
-                airport.getCity()
-        ).orElseGet(() -> airportRepository.save(airport));
     }
 }
 

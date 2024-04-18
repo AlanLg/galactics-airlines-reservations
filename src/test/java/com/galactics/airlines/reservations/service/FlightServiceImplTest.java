@@ -10,10 +10,13 @@ import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
 import com.galactics.airlines.reservations.model.entity.Airplane;
 import com.galactics.airlines.reservations.model.entity.Airport;
 import com.galactics.airlines.reservations.model.entity.Flight;
-import com.galactics.airlines.reservations.repository.AirportRepository;
 import com.galactics.airlines.reservations.repository.FlightRepository;
+import com.galactics.airlines.reservations.repository.ReservationRepository;
 import com.galactics.airlines.reservations.service.impl.AirplaneServiceImpl;
+import com.galactics.airlines.reservations.service.impl.AirportServiceImpl;
 import com.galactics.airlines.reservations.service.impl.FlightServiceImpl;
+import com.galactics.airlines.reservations.service.impl.ReservationServiceImpl;
+import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -21,6 +24,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -35,10 +39,15 @@ public class FlightServiceImplTest {
     private AirplaneServiceImpl airplaneService;
 
     @Mock
+    private ReservationRepository reservationRepository;
+
+    @Mock
     private FlightRepository flightRepository;
 
     @Mock
-    private AirportRepository airportRepository;
+    private AirportServiceImpl airportService;
+
+    private static final EasyRandom generator = new EasyRandom();
 
     @InjectMocks
     private FlightServiceImpl flightService;
@@ -109,7 +118,7 @@ public class FlightServiceImplTest {
                 any(), any(), any(), any(), any())).thenReturn(Optional.empty());
         when(flightRepository.save(any())).thenReturn(flight);
         when(airplaneService.findOrSaveAirplane(any())).thenReturn(new Airplane());
-        when(airportRepository.findByAirportNameAndCountryAndCity(any(), any(), any())).thenReturn(Optional.of(new Airport()));
+        when(airportService.findOrSaveAirport(any())).thenReturn(new Airport());
 
         FlightDTOResponse response = flightService.addFlight(request);
 
@@ -144,7 +153,7 @@ public class FlightServiceImplTest {
         when(flightRepository.findById(id)).thenReturn(Optional.of(flight));
         when(flightRepository.save(any())).thenReturn(flight);
         when(airplaneService.findOrSaveAirplane(any())).thenReturn(new Airplane());
-        when(airportRepository.findByAirportNameAndCountryAndCity(any(), any(), any())).thenReturn(Optional.of(new Airport()));
+        when(airportService.findOrSaveAirport(any())).thenReturn(new Airport());
 
         FlightDTOResponse response = flightService.updateFlight(id, request);
 
@@ -156,6 +165,7 @@ public class FlightServiceImplTest {
         Long id = 1L;
         Flight flight = new Flight();
         when(flightRepository.findById(id)).thenReturn(Optional.of(flight));
+        when(reservationRepository.findByFlight_FlightId(any())).thenReturn(Optional.empty());
 
         flightService.deleteFlight(id);
 
