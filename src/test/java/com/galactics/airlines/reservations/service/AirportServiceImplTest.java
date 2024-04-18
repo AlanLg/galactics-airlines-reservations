@@ -69,7 +69,7 @@ public class AirportServiceImplTest {
 
         // Assert
         assertNotNull(response);
-        assertEquals(id, response.getAirportId());
+        assertEquals("CDG", response.getAirportName());
     }
 
     @Test

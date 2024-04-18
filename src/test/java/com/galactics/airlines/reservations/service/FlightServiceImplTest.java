@@ -49,7 +49,6 @@ public class FlightServiceImplTest {
     @Test
     void testAddFlight_Success() throws GalaticsAirlinesException {
         AirportDTORequest airport = new AirportDTORequest();
-        airport.setAirportId(1L);
         airport.setAirportName("TestAirportName");
         airport.setCity("TestCity");
         airport.setCountry("TestCountry");
@@ -86,7 +85,6 @@ public class FlightServiceImplTest {
     void testUpdateFlight_Success() throws GalaticsAirlinesException {
         Long id = 1L;
         AirportDTORequest airport = new AirportDTORequest();
-        airport.setAirportId(1L);
         airport.setAirportName("TestAirportName");
         airport.setCity("TestCity");
         airport.setCountry("TestCountry");

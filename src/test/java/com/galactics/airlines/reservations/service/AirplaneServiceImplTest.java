@@ -32,7 +32,6 @@ public class AirplaneServiceImplTest {
     @Test
     public void testAddAirplane_Success() throws GalaticsAirlinesException {
         AirplaneDTORequest airplaneDTORequest = new AirplaneDTORequest();
-        airplaneDTORequest.setAirplaneId(1L);
         airplaneDTORequest.setBrand("BrandTest");
         airplaneDTORequest.setModel("ModelTest");
         airplaneDTORequest.setManufacturingYear(2001);
