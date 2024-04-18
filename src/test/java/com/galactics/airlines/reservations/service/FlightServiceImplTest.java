@@ -78,10 +78,15 @@ public class FlightServiceImplTest {
 
     @Test
     void testAddFlight_Success() throws GalacticsAirlinesException {
-        AirportDTORequest airport = new AirportDTORequest();
-        airport.setAirportName("TestAirportName");
-        airport.setCity("TestCity");
-        airport.setCountry("TestCountry");
+        AirportDTORequest departureAirport = new AirportDTORequest();
+        departureAirport.setAirportName("TestAirportName");
+        departureAirport.setCity("TestCity");
+        departureAirport.setCountry("TestCountry");
+
+        AirportDTORequest arrivalAirport = new AirportDTORequest();
+        arrivalAirport.setAirportName("TestAirportName2");
+        arrivalAirport.setCity("TestCity2");
+        arrivalAirport.setCountry("TestCountry2");
 
         AirplaneDTORequest airplane = new AirplaneDTORequest();
         airplane.setBrand("BrandTest");
@@ -94,8 +99,8 @@ public class FlightServiceImplTest {
         request.setDepartureDateTime(LocalDateTime.now());
         request.setArrivalDateTime(LocalDateTime.now());
         request.setNumberOfSeats(500);
-        request.setDepartureAirport(airport);
-        request.setArrivalAirport(airport);
+        request.setDepartureAirport(departureAirport);
+        request.setArrivalAirport(arrivalAirport);
         request.setAirplane(airplane);
 
         Flight flight = new Flight();

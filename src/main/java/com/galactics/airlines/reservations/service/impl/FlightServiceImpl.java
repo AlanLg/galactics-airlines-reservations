@@ -41,8 +41,8 @@ public class FlightServiceImpl implements FlightService {
         Flight createdFlight = linkAndSaveAssociatedEntities(flightDTORequest);
 
         if (flightDTORequest.getArrivalAirport().equals(flightDTORequest.getDepartureAirport())) {
-            log.info("L'aéroport de départ et d'arrivée ne peuvent pas être les mêmes");
-            throw new GalacticsAirlinesException("L'aéroport de départ et d'arrivée ne peuvent pas être les mêmes");
+            log.info("departure and arrival airport cannot be the same");
+            throw new GalacticsAirlinesException("departure and arrival airport cannot be the same");
         }
 
         Optional<Flight> existingFlight = flightRepository.findByDepartureCityAndArrivalCityAndDepartureAirportAndArrivalAirportAndAirplane(
