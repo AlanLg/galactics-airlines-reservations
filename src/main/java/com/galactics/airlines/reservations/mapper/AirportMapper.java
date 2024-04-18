@@ -11,13 +11,11 @@ import org.mapstruct.factory.Mappers;
 public interface AirportMapper {
     AirportMapper INSTANCE = Mappers.getMapper(AirportMapper.class);
 
-    @Mapping(source = "airportId", target = "airportId")
     @Mapping(source = "airportName", target = "airportName")
     @Mapping(source = "country", target = "country")
     @Mapping(source = "city", target = "city")
     Airport airportDTORequestToAirportEntity(AirportDTORequest airportDTORequest);
 
-    @Mapping(source = "airportId", target = "airportId")
     @Mapping(source = "airportName", target = "airportName")
     @Mapping(source = "country", target = "country")
     @Mapping(source = "city", target = "city")

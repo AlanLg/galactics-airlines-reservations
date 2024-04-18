@@ -11,7 +11,6 @@ import org.mapstruct.factory.Mappers;
 public interface AirplaneMapper {
     AirplaneMapper INSTANCE = Mappers.getMapper(AirplaneMapper.class);
 
-    @Mapping(source = "airplaneId", target = "airplaneId")
     @Mapping(source = "brand", target = "brand")
     @Mapping(source = "model", target = "model")
     @Mapping(source = "manufacturingYear", target = "manufacturingYear")

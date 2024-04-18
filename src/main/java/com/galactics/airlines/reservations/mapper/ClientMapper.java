@@ -20,7 +20,6 @@ public interface ClientMapper {
     @Mapping(source = "passportNumber", target = "passportNumber")
     Client clientDTORequestToClientEntity(ClientDTORequest clientDTORequest);
 
-    @Mapping(source = "id", target = "id")
     @Mapping(source = "firstname", target = "firstname")
     @Mapping(source = "lastname", target = "lastname")
     @Mapping(source = "address", target = "address")
@@ -30,7 +29,6 @@ public interface ClientMapper {
     @Mapping(source = "passportNumber", target = "passportNumber")
     ClientDTOResponse clientEntityToClientDTOResponse(Client client);
 
-    @Mapping(source = "id", target = "id")
     @Mapping(source = "firstname", target = "firstname")
     @Mapping(source = "lastname", target = "lastname")
     @Mapping(source = "address", target = "address")

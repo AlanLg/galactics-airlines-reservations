@@ -13,7 +13,6 @@ import java.util.List;
 public interface FlightMapper {
     FlightMapper INSTANCE = Mappers.getMapper(FlightMapper.class);
 
-    @Mapping(source = "flightId", target = "flightId")
     @Mapping(source = "departureCity", target = "departureCity")
     @Mapping(source = "arrivalCity", target = "arrivalCity")
     @Mapping(source = "departureDateTime", target = "departureDateTime")
