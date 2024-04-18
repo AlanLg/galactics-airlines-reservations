@@ -2,7 +2,7 @@ package com.galactics.airlines.reservations.service.impl;
 
 import com.galactics.airlines.reservations.exception.ClientAlreadyExistsException;
 import com.galactics.airlines.reservations.exception.ClientNotFoundException;
-import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
+import com.galactics.airlines.reservations.exception.GalacticsAirlinesException;
 import com.galactics.airlines.reservations.mapper.ClientMapper;
 import com.galactics.airlines.reservations.mapper.ReservationMapper;
 import com.galactics.airlines.reservations.model.dto.request.ClientDTORequest;
@@ -30,11 +30,11 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientDTOResponse addClient(@Valid ClientDTORequest clientDTORequest) throws GalaticsAirlinesException {
+    public ClientDTOResponse addClient(@Valid ClientDTORequest clientDTORequest) throws GalacticsAirlinesException {
         Client createdClient = ClientMapper.INSTANCE.clientDTORequestToClientEntity(clientDTORequest);
 
         if (!ClientValidationUtils.isValidClient(createdClient)) {
-            throw new GalaticsAirlinesException("Il manque un élément dans le JSON");
+            throw new GalacticsAirlinesException("Il manque un élément dans le JSON");
         }
 
         Optional<Client> existingClient = clientRepository.findByEmail(createdClient.getEmail());
@@ -50,15 +50,15 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientDTOResponse updateClient(Long id, ClientDTORequest clientDTORequest) throws GalaticsAirlinesException {
+    public ClientDTOResponse updateClient(Long id, ClientDTORequest clientDTORequest) throws GalacticsAirlinesException {
         if (id == null || clientRepository.findById(id).isEmpty()) {
-            throw new GalaticsAirlinesException("Aucun client en bdd");
+            throw new GalacticsAirlinesException("Aucun client en bdd");
         }
 
         Client updatedClient = ClientMapper.INSTANCE.clientDTORequestToClientEntity(clientDTORequest);
 
         if (!ClientValidationUtils.isValidClient(updatedClient)) {
-            throw new GalaticsAirlinesException("Il manque un élément dans le JSON");
+            throw new GalacticsAirlinesException("Il manque un élément dans le JSON");
         }
 
         updatedClient.setId(id);
@@ -67,16 +67,16 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void deleteClient(Long id) throws GalaticsAirlinesException {
+    public void deleteClient(Long id) throws GalacticsAirlinesException {
         if (id == null) {
-            throw new GalaticsAirlinesException("Il manque un élément dans le JSON");
+            throw new GalacticsAirlinesException("Il manque un élément dans le JSON");
         }
 
         Client client = clientRepository.findById(id).orElse(null);
         if (client != null) {
             clientRepository.delete(client);
         } else {
-            throw new GalaticsAirlinesException("Aucun client en base");
+            throw new GalacticsAirlinesException("Aucun client en base");
         }
     }
 

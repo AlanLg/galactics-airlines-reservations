@@ -1,12 +1,9 @@
 package com.galactics.airlines.reservations.controller;
 
-import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
+import com.galactics.airlines.reservations.exception.GalacticsAirlinesException;
 import com.galactics.airlines.reservations.model.dto.request.AirplaneDTORequest;
-import com.galactics.airlines.reservations.model.dto.request.FlightDTORequest;
 import com.galactics.airlines.reservations.model.dto.response.AirplaneDTOResponse;
-import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
 import com.galactics.airlines.reservations.service.AirplaneService;
-import com.galactics.airlines.reservations.service.FlightService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -27,18 +24,18 @@ public class AirplaneController {
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<AirplaneDTOResponse> getAirplane(@PathVariable Long id) throws GalaticsAirlinesException {
+    public ResponseEntity<AirplaneDTOResponse> getAirplane(@PathVariable Long id) throws GalacticsAirlinesException {
         return ResponseEntity.ok(airplaneService.getAirplane(id));
     }
 
     @PostMapping("/add")
-    public ResponseEntity<AirplaneDTOResponse> addAirplane(@RequestBody AirplaneDTORequest airplaneDTORequest) throws GalaticsAirlinesException {
+    public ResponseEntity<AirplaneDTOResponse> addAirplane(@RequestBody AirplaneDTORequest airplaneDTORequest) throws GalacticsAirlinesException {
         log.info("Adding airplane: {}", airplaneDTORequest.toString());
         return ResponseEntity.ok(airplaneService.addAirplane(airplaneDTORequest));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<AirplaneDTOResponse> updateAirplane(@PathVariable Long id, @RequestBody AirplaneDTORequest airplaneDTORequest) throws GalaticsAirlinesException {
+    public ResponseEntity<AirplaneDTOResponse> updateAirplane(@PathVariable Long id, @RequestBody AirplaneDTORequest airplaneDTORequest) throws GalacticsAirlinesException {
         log.info("Updating airplane: {}", airplaneDTORequest.toString());
         return ResponseEntity.ok(airplaneService.updateAirplane(id, airplaneDTORequest));
     }
@@ -49,7 +46,7 @@ public class AirplaneController {
             airplaneService.deleteAirplane(id);
             log.info("Airplane deleted");
             return ResponseEntity.accepted().build();
-        } catch (GalaticsAirlinesException e) {
+        } catch (GalacticsAirlinesException e) {
             return ResponseEntity.badRequest().build();
         }
     }

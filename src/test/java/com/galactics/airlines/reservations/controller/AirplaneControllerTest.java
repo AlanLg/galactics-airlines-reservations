@@ -1,6 +1,6 @@
 package com.galactics.airlines.reservations.controller;
 
-import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
+import com.galactics.airlines.reservations.exception.GalacticsAirlinesException;
 import com.galactics.airlines.reservations.model.dto.request.AirplaneDTORequest;
 import com.galactics.airlines.reservations.model.dto.response.AirplaneDTOResponse;
 import com.galactics.airlines.reservations.service.AirplaneService;
@@ -29,7 +29,7 @@ public class AirplaneControllerTest {
     }
 
     @Test
-    void shouldReturnAirplaneWhenGetAirplaneIsCalledWithValidId() throws GalaticsAirlinesException {
+    void shouldReturnAirplaneWhenGetAirplaneIsCalledWithValidId() throws GalacticsAirlinesException {
         Long id = 1L;
         AirplaneDTOResponse expectedResponse = new AirplaneDTOResponse();
         when(airplaneService.getAirplane(id)).thenReturn(expectedResponse);
@@ -42,16 +42,16 @@ public class AirplaneControllerTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenGetAirplaneIsCalledWithInvalidId() throws GalaticsAirlinesException {
+    void shouldThrowExceptionWhenGetAirplaneIsCalledWithInvalidId() throws GalacticsAirlinesException {
         Long id = -1L;
-        when(airplaneService.getAirplane(id)).thenThrow(new GalaticsAirlinesException("Invalid id"));
+        when(airplaneService.getAirplane(id)).thenThrow(new GalacticsAirlinesException("Invalid id"));
 
-        assertThrows(GalaticsAirlinesException.class, () -> airplaneController.getAirplane(id));
+        assertThrows(GalacticsAirlinesException.class, () -> airplaneController.getAirplane(id));
         verify(airplaneService, times(1)).getAirplane(id);
     }
 
     @Test
-    void testAddAirplane_Success() throws GalaticsAirlinesException {
+    void testAddAirplane_Success() throws GalacticsAirlinesException {
         AirplaneDTORequest request = new AirplaneDTORequest();
         AirplaneDTOResponse expectedResponse = new AirplaneDTOResponse();
         when(airplaneService.addAirplane(request)).thenReturn(expectedResponse);
@@ -64,7 +64,7 @@ public class AirplaneControllerTest {
     }
 
     @Test
-    void testUpdateAirplane_Success() throws GalaticsAirlinesException {
+    void testUpdateAirplane_Success() throws GalacticsAirlinesException {
         Long id = 1L;
         AirplaneDTORequest request = new AirplaneDTORequest();
         AirplaneDTOResponse expectedResponse = new AirplaneDTOResponse();
@@ -79,7 +79,7 @@ public class AirplaneControllerTest {
     }
 
     @Test
-    void testDeleteAirplane_Success() throws GalaticsAirlinesException {
+    void testDeleteAirplane_Success() throws GalacticsAirlinesException {
         Long id = 1L;
 
         ResponseEntity<Void> response = airplaneController.deleteAirplane(id);
@@ -90,9 +90,9 @@ public class AirplaneControllerTest {
     }
 
     @Test
-    void testDeleteAirplane_Failure() throws GalaticsAirlinesException {
+    void testDeleteAirplane_Failure() throws GalacticsAirlinesException {
         Long id = 1L;
-        doThrow(new GalaticsAirlinesException("")).when(airplaneService).deleteAirplane(id);
+        doThrow(new GalacticsAirlinesException("")).when(airplaneService).deleteAirplane(id);
 
         ResponseEntity<Void> response = airplaneController.deleteAirplane(id);
 

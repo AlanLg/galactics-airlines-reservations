@@ -1,6 +1,6 @@
 package com.galactics.airlines.reservations.service;
 
-import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
+import com.galactics.airlines.reservations.exception.GalacticsAirlinesException;
 import com.galactics.airlines.reservations.mapper.AirportMapper;
 import com.galactics.airlines.reservations.model.dto.request.AirportDTORequest;
 import com.galactics.airlines.reservations.model.dto.response.AirportDTOResponse;
@@ -33,7 +33,7 @@ public class AirportServiceImplTest {
     }
 
     @Test
-    void shouldReturnAirportWhenGetAirportIsCalledWithValidId() throws GalaticsAirlinesException {
+    void shouldReturnAirportWhenGetAirportIsCalledWithValidId() throws GalacticsAirlinesException {
         Long id = 1L;
         Airport airport = new Airport();
         when(airportRepository.findById(id)).thenReturn(Optional.of(airport));
@@ -47,7 +47,7 @@ public class AirportServiceImplTest {
 
     @Test
     void shouldThrowExceptionWhenGetAirportIsCalledWithNullId() {
-        assertThrows(GalaticsAirlinesException.class, () -> airportService.getAirport(null));
+        assertThrows(GalacticsAirlinesException.class, () -> airportService.getAirport(null));
         verify(airportRepository, never()).findById(any());
     }
 
@@ -56,12 +56,12 @@ public class AirportServiceImplTest {
         Long id = -1L;
         when(airportRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertThrows(GalaticsAirlinesException.class, () -> airportService.getAirport(id));
+        assertThrows(GalacticsAirlinesException.class, () -> airportService.getAirport(id));
         verify(airportRepository, times(1)).findById(id);
     }
 
     @Test
-    void testAddAirport_Success() throws GalaticsAirlinesException {
+    void testAddAirport_Success() throws GalacticsAirlinesException {
         // Arrange
         AirportDTORequest airportDTORequest = new AirportDTORequest();
         airportDTORequest.setAirportName("CDG");
@@ -80,7 +80,7 @@ public class AirportServiceImplTest {
     }
 
     @Test
-    void testUpdateAirport_Success() throws GalaticsAirlinesException {
+    void testUpdateAirport_Success() throws GalacticsAirlinesException {
         // Arrange
         Long id = 1L;
         AirportDTORequest airportDTORequest = new AirportDTORequest();
@@ -101,7 +101,7 @@ public class AirportServiceImplTest {
     }
 
     @Test
-    void testDeleteAirport_Success() throws GalaticsAirlinesException {
+    void testDeleteAirport_Success() throws GalacticsAirlinesException {
         // Arrange
         Long id = 1L;
         Airport airport = new Airport();
@@ -117,7 +117,7 @@ public class AirportServiceImplTest {
     @Test
     void testDeleteAirport_Failure_IdNull() {
         // Act & Assert
-        assertThrows(GalaticsAirlinesException.class, () -> airportService.deleteAirport(null));
+        assertThrows(GalacticsAirlinesException.class, () -> airportService.deleteAirport(null));
     }
 
     @Test
@@ -127,6 +127,6 @@ public class AirportServiceImplTest {
         when(airportRepository.findById(id)).thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThrows(GalaticsAirlinesException.class, () -> airportService.deleteAirport(id));
+        assertThrows(GalacticsAirlinesException.class, () -> airportService.deleteAirport(id));
     }
 }

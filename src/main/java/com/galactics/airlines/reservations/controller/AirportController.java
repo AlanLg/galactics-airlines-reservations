@@ -1,9 +1,8 @@
 package com.galactics.airlines.reservations.controller;
 
-import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
+import com.galactics.airlines.reservations.exception.GalacticsAirlinesException;
 import com.galactics.airlines.reservations.model.dto.request.AirportDTORequest;
 import com.galactics.airlines.reservations.model.dto.response.AirportDTOResponse;
-import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
 import com.galactics.airlines.reservations.service.AirportService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -26,19 +25,19 @@ public class AirportController {
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<AirportDTOResponse> getAirport(@PathVariable Long id) throws GalaticsAirlinesException {
+    public ResponseEntity<AirportDTOResponse> getAirport(@PathVariable Long id) throws GalacticsAirlinesException {
         return ResponseEntity.ok(airportService.getAirport(id));
     }
 
     @PostMapping("/add")
-    public ResponseEntity<AirportDTOResponse> addAirport(@RequestBody AirportDTORequest airportDTORequest) throws GalaticsAirlinesException {
+    public ResponseEntity<AirportDTOResponse> addAirport(@RequestBody AirportDTORequest airportDTORequest) throws GalacticsAirlinesException {
         log.info("Adding airport: {}", airportDTORequest.toString());
         return ResponseEntity.ok(airportService.addAirport(airportDTORequest));
     }
 
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<AirportDTOResponse> updateAirport(@PathVariable Long id, @RequestBody AirportDTORequest airportDTORequest) throws GalaticsAirlinesException {
+    public ResponseEntity<AirportDTOResponse> updateAirport(@PathVariable Long id, @RequestBody AirportDTORequest airportDTORequest) throws GalacticsAirlinesException {
         log.info("Updating airport: {}", airportDTORequest.toString());
         return ResponseEntity.ok(airportService.updateAirport(id, airportDTORequest));
     }
@@ -49,7 +48,7 @@ public class AirportController {
             airportService.deleteAirport(id);
             log.info("Airport Deleted");
             return ResponseEntity.accepted().build();
-        } catch (GalaticsAirlinesException e) {
+        } catch (GalacticsAirlinesException e) {
             return ResponseEntity.badRequest().build();
         }
     }

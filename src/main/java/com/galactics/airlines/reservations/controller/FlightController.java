@@ -1,6 +1,6 @@
 package com.galactics.airlines.reservations.controller;
 
-import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
+import com.galactics.airlines.reservations.exception.GalacticsAirlinesException;
 import com.galactics.airlines.reservations.model.dto.request.FilterFlightDTORequest;
 import com.galactics.airlines.reservations.model.dto.request.FlightDTORequest;
 import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
@@ -27,18 +27,18 @@ public class FlightController {
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<FlightDTOResponse> getFlight(@PathVariable Long id) throws GalaticsAirlinesException {
+    public ResponseEntity<FlightDTOResponse> getFlight(@PathVariable Long id) throws GalacticsAirlinesException {
         return ResponseEntity.ok(flightService.getFlight(id));
     }
 
     @PostMapping("/add")
-    public ResponseEntity<FlightDTOResponse> addFlight(@RequestBody FlightDTORequest flightDTORequest) throws GalaticsAirlinesException {
+    public ResponseEntity<FlightDTOResponse> addFlight(@RequestBody FlightDTORequest flightDTORequest) throws GalacticsAirlinesException {
         log.info("Adding flight: {}", flightDTORequest.toString());
         return ResponseEntity.ok(flightService.addFlight(flightDTORequest));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<FlightDTOResponse> updateFlight(@PathVariable Long id, @RequestBody FlightDTORequest flightDTORequest) throws GalaticsAirlinesException {
+    public ResponseEntity<FlightDTOResponse> updateFlight(@PathVariable Long id, @RequestBody FlightDTORequest flightDTORequest) throws GalacticsAirlinesException {
         log.info("Updating flight: {}", flightDTORequest.toString());
         return ResponseEntity.ok(flightService.updateFlight(id, flightDTORequest));
     }
@@ -49,7 +49,7 @@ public class FlightController {
             flightService.deleteFlight(id);
             log.info("Flight Deleted");
             return ResponseEntity.accepted().build();
-        } catch (GalaticsAirlinesException e) {
+        } catch (GalacticsAirlinesException e) {
             return ResponseEntity.badRequest().build();
         }
     }

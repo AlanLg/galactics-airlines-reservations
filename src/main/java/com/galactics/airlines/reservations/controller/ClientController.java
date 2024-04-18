@@ -1,6 +1,6 @@
 package com.galactics.airlines.reservations.controller;
 
-import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
+import com.galactics.airlines.reservations.exception.GalacticsAirlinesException;
 import com.galactics.airlines.reservations.model.dto.request.ClientDTORequest;
 import com.galactics.airlines.reservations.model.dto.response.ClientDTOResponse;
 import com.galactics.airlines.reservations.service.ClientService;
@@ -25,13 +25,13 @@ public class ClientController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ClientDTOResponse> addClient(@Valid @RequestBody ClientDTORequest clientDTORequest) throws GalaticsAirlinesException {
+    public ResponseEntity<ClientDTOResponse> addClient(@Valid @RequestBody ClientDTORequest clientDTORequest) throws GalacticsAirlinesException {
         log.info("Adding client: {}", clientDTORequest.toString());
         return ResponseEntity.ok(clientService.addClient(clientDTORequest));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<ClientDTOResponse> updateClient(@PathVariable Long id, @RequestBody ClientDTORequest clientDTORequest) throws GalaticsAirlinesException {
+    public ResponseEntity<ClientDTOResponse> updateClient(@PathVariable Long id, @RequestBody ClientDTORequest clientDTORequest) throws GalacticsAirlinesException {
         log.info("Updating client: {}", clientDTORequest.toString());
         return ResponseEntity.ok(clientService.updateClient(id, clientDTORequest));
     }
@@ -42,7 +42,7 @@ public class ClientController {
         try {
             clientService.deleteClient(id);
             return ResponseEntity.accepted().build();
-        } catch (GalaticsAirlinesException e) {
+        } catch (GalacticsAirlinesException e) {
             return ResponseEntity.badRequest().build();
         }
     }

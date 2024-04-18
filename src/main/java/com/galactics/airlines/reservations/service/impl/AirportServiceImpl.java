@@ -1,6 +1,6 @@
 package com.galactics.airlines.reservations.service.impl;
 
-import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
+import com.galactics.airlines.reservations.exception.GalacticsAirlinesException;
 import com.galactics.airlines.reservations.mapper.AirportMapper;
 import com.galactics.airlines.reservations.model.dto.request.AirportDTORequest;
 import com.galactics.airlines.reservations.model.dto.response.AirportDTOResponse;
@@ -22,25 +22,25 @@ public class AirportServiceImpl implements AirportService {
     }
 
     @Override
-    public AirportDTOResponse getAirport(Long id) throws GalaticsAirlinesException {
+    public AirportDTOResponse getAirport(Long id) throws GalacticsAirlinesException {
         if (id == null) {
-            throw new GalaticsAirlinesException("Il manque un élément dans le json");
+            throw new GalacticsAirlinesException("Il manque un élément dans le json");
         }
 
         Airport targetAirport = airportRepository.findById(id).orElse(null);
 
         if (targetAirport == null) {
-            throw new GalaticsAirlinesException("Aucun flight en bdd");
+            throw new GalacticsAirlinesException("Aucun flight en bdd");
         }
         return AirportMapper.INSTANCE.airportEntityToAirportDTOResponse(targetAirport);
     }
 
     @Override
-    public AirportDTOResponse addAirport(AirportDTORequest airportDTORequest) throws GalaticsAirlinesException {
+    public AirportDTOResponse addAirport(AirportDTORequest airportDTORequest) throws GalacticsAirlinesException {
         Airport createdAirport = AirportMapper.INSTANCE.airportDTORequestToAirportEntity(airportDTORequest);
 
         if (!AirportValidationUtils.isValidAirport(createdAirport)) {
-            throw new GalaticsAirlinesException("Il manque un élément dans le JSON");
+            throw new GalacticsAirlinesException("Il manque un élément dans le JSON");
         }
 
         Optional<Airport> existingAirport = airportRepository.findByAirportNameAndCountryAndCity(createdAirport.getAirportName(), createdAirport.getCountry(), createdAirport.getCity());
@@ -53,15 +53,15 @@ public class AirportServiceImpl implements AirportService {
     }
 
     @Override
-    public AirportDTOResponse updateAirport(Long id, AirportDTORequest airportDTORequest) throws GalaticsAirlinesException {
+    public AirportDTOResponse updateAirport(Long id, AirportDTORequest airportDTORequest) throws GalacticsAirlinesException {
         if (id == null || airportRepository.findById(id).isEmpty()) {
-            throw new GalaticsAirlinesException("Aucun airport en bdd");
+            throw new GalacticsAirlinesException("Aucun airport en bdd");
         }
 
         Airport updatedAirport = AirportMapper.INSTANCE.airportDTORequestToAirportEntity(airportDTORequest);
 
         if (!AirportValidationUtils.isValidAirport(updatedAirport)) {
-            throw new GalaticsAirlinesException("Il manque un élément dans le JSON");
+            throw new GalacticsAirlinesException("Il manque un élément dans le JSON");
         }
 
         updatedAirport.setAirportId(id);
@@ -70,16 +70,16 @@ public class AirportServiceImpl implements AirportService {
     }
 
     @Override
-    public void deleteAirport(Long id) throws GalaticsAirlinesException {
+    public void deleteAirport(Long id) throws GalacticsAirlinesException {
         if (id == null) {
-            throw new GalaticsAirlinesException("Il manque un élément dans le JSON");
+            throw new GalacticsAirlinesException("Il manque un élément dans le JSON");
         }
 
         Airport airport = airportRepository.findById(id).orElse(null);
         if (airport != null) {
             airportRepository.delete(airport);
         } else {
-            throw new GalaticsAirlinesException("Aucun aeroport en base");
+            throw new GalacticsAirlinesException("Aucun aeroport en base");
         }
     }
 }

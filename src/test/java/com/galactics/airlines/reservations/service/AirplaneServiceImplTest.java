@@ -1,6 +1,6 @@
 package com.galactics.airlines.reservations.service;
 
-import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
+import com.galactics.airlines.reservations.exception.GalacticsAirlinesException;
 import com.galactics.airlines.reservations.mapper.AirplaneMapper;
 import com.galactics.airlines.reservations.model.dto.request.AirplaneDTORequest;
 import com.galactics.airlines.reservations.model.dto.response.AirplaneDTOResponse;
@@ -32,7 +32,7 @@ public class AirplaneServiceImplTest {
     private AirplaneServiceImpl airplaneService;
 
     @Test
-    public void shouldReturnAirplaneWhenGetAirplaneIsCalledWithValidId() throws GalaticsAirlinesException {
+    public void shouldReturnAirplaneWhenGetAirplaneIsCalledWithValidId() throws GalacticsAirlinesException {
         Long id = 1L;
         Airplane airplane = new Airplane();
         when(airplaneRepository.findById(id)).thenReturn(Optional.of(airplane));
@@ -46,7 +46,7 @@ public class AirplaneServiceImplTest {
 
     @Test
     public void shouldThrowExceptionWhenGetAirplaneIsCalledWithNullId() {
-        assertThrows(GalaticsAirlinesException.class, () -> airplaneService.getAirplane(null));
+        assertThrows(GalacticsAirlinesException.class, () -> airplaneService.getAirplane(null));
         verify(airplaneRepository, never()).findById(any());
     }
 
@@ -55,12 +55,12 @@ public class AirplaneServiceImplTest {
         Long id = -1L;
         when(airplaneRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertThrows(GalaticsAirlinesException.class, () -> airplaneService.getAirplane(id));
+        assertThrows(GalacticsAirlinesException.class, () -> airplaneService.getAirplane(id));
         verify(airplaneRepository, times(1)).findById(id);
     }
 
     @Test
-    public void testAddAirplane_Success() throws GalaticsAirlinesException {
+    public void testAddAirplane_Success() throws GalacticsAirlinesException {
         AirplaneDTORequest airplaneDTORequest = new AirplaneDTORequest();
         airplaneDTORequest.setBrand("BrandTest");
         airplaneDTORequest.setModel("ModelTest");
@@ -74,7 +74,7 @@ public class AirplaneServiceImplTest {
     }
 
     @Test
-    public void testUpdateAirplane_Success() throws GalaticsAirlinesException {
+    public void testUpdateAirplane_Success() throws GalacticsAirlinesException {
         Long id = 1L;
         AirplaneDTORequest airplaneDTORequest = new AirplaneDTORequest();
         airplaneDTORequest.setBrand("BrandTest");
@@ -91,7 +91,7 @@ public class AirplaneServiceImplTest {
     }
 
     @Test
-    public void testDeleteAirplane_Success() throws GalaticsAirlinesException {
+    public void testDeleteAirplane_Success() throws GalacticsAirlinesException {
         Long id = 1L;
         when(airplaneRepository.findById(id)).thenReturn(java.util.Optional.of(new Airplane()));
         airplaneService.deleteAirplane(id);
@@ -102,7 +102,7 @@ public class AirplaneServiceImplTest {
         try {
             airplaneService.addAirplane(null);
             fail("Expected GalaticsAirlinesException was not thrown");
-        } catch (GalaticsAirlinesException e) {
+        } catch (GalacticsAirlinesException e) {
             assertEquals("Il manque un élément dans le JSON", e.getMessage());
         }
     }
@@ -113,7 +113,7 @@ public class AirplaneServiceImplTest {
         try {
             airplaneService.addAirplane(airplaneDTORequest);
             fail("Expected GalaticsAirlinesException was not thrown");
-        } catch (GalaticsAirlinesException e) {
+        } catch (GalacticsAirlinesException e) {
             assertEquals("Il manque un élément dans le JSON", e.getMessage());
         }
     }
@@ -125,7 +125,7 @@ public class AirplaneServiceImplTest {
         try {
             airplaneService.updateAirplane(id, airplaneDTORequest);
             fail("Expected GalaticsAirlinesException was not thrown");
-        } catch (GalaticsAirlinesException e) {
+        } catch (GalacticsAirlinesException e) {
             assertEquals("Aucun vol en bdd", e.getMessage());
         }
     }
@@ -139,7 +139,7 @@ public class AirplaneServiceImplTest {
         try {
             airplaneService.updateAirplane(id, airplaneDTORequest);
             fail("Expected GalaticsAirlinesException was not thrown");
-        } catch (GalaticsAirlinesException e) {
+        } catch (GalacticsAirlinesException e) {
             assertEquals("Aucun vol en bdd", e.getMessage());
         }
     }
@@ -149,7 +149,7 @@ public class AirplaneServiceImplTest {
         try {
             airplaneService.deleteAirplane(null);
             fail("Expected GalaticsAirlinesException was not thrown");
-        } catch (GalaticsAirlinesException e) {
+        } catch (GalacticsAirlinesException e) {
             assertEquals("Il manque un élément dans le JSON", e.getMessage());
         }
     }
@@ -162,7 +162,7 @@ public class AirplaneServiceImplTest {
         try {
             airplaneService.deleteAirplane(id);
             fail("Expected GalaticsAirlinesException was not thrown");
-        } catch (GalaticsAirlinesException e) {
+        } catch (GalacticsAirlinesException e) {
             assertEquals("Aucun vol en base", e.getMessage());
         }
     }

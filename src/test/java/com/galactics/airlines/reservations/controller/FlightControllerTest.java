@@ -1,7 +1,6 @@
 package com.galactics.airlines.reservations.controller;
 
-import com.galactics.airlines.reservations.controller.FlightController;
-import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
+import com.galactics.airlines.reservations.exception.GalacticsAirlinesException;
 import com.galactics.airlines.reservations.model.dto.request.FlightDTORequest;
 import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
 import com.galactics.airlines.reservations.service.FlightService;
@@ -30,7 +29,7 @@ public class FlightControllerTest {
     }
 
     @Test
-    void shouldReturnFlightWhenGetFlightIsCalledWithValidId() throws GalaticsAirlinesException {
+    void shouldReturnFlightWhenGetFlightIsCalledWithValidId() throws GalacticsAirlinesException {
         Long id = 1L;
         FlightDTOResponse expectedResponse = new FlightDTOResponse();
         when(flightService.getFlight(id)).thenReturn(expectedResponse);
@@ -43,16 +42,16 @@ public class FlightControllerTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenGetFlightIsCalledWithInvalidId() throws GalaticsAirlinesException {
+    void shouldThrowExceptionWhenGetFlightIsCalledWithInvalidId() throws GalacticsAirlinesException {
         Long id = -1L;
-        when(flightService.getFlight(id)).thenThrow(new GalaticsAirlinesException("Invalid id"));
+        when(flightService.getFlight(id)).thenThrow(new GalacticsAirlinesException("Invalid id"));
 
-        assertThrows(GalaticsAirlinesException.class, () -> flightController.getFlight(id));
+        assertThrows(GalacticsAirlinesException.class, () -> flightController.getFlight(id));
         verify(flightService, times(1)).getFlight(id);
     }
 
     @Test
-    void testAddFlight_Success() throws GalaticsAirlinesException {
+    void testAddFlight_Success() throws GalacticsAirlinesException {
         // Arrange
         FlightDTORequest request = new FlightDTORequest();
         FlightDTOResponse expectedResponse = new FlightDTOResponse();
@@ -70,7 +69,7 @@ public class FlightControllerTest {
     }
 
     @Test
-    void testUpdateFlight_Success() throws GalaticsAirlinesException {
+    void testUpdateFlight_Success() throws GalacticsAirlinesException {
         // Arrange
         Long id = 1L;
         FlightDTORequest request = new FlightDTORequest();
@@ -89,7 +88,7 @@ public class FlightControllerTest {
     }
 
     @Test
-    void testDeleteFlight_Success() throws GalaticsAirlinesException {
+    void testDeleteFlight_Success() throws GalacticsAirlinesException {
         // Arrange
         Long id = 1L;
 
@@ -104,10 +103,10 @@ public class FlightControllerTest {
     }
 
     @Test
-    void testDeleteFlight_Failure() throws GalaticsAirlinesException {
+    void testDeleteFlight_Failure() throws GalacticsAirlinesException {
         // Arrange
         Long id = 1L;
-        doThrow(new GalaticsAirlinesException("Flight not found")).when(flightService).deleteFlight(id);
+        doThrow(new GalacticsAirlinesException("Flight not found")).when(flightService).deleteFlight(id);
 
         // Act
         ResponseEntity<Void> response = flightController.deleteFlight(id);

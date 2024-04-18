@@ -1,7 +1,6 @@
 package com.galactics.airlines.reservations.controller;
 
-import com.galactics.airlines.reservations.controller.AirportController;
-import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
+import com.galactics.airlines.reservations.exception.GalacticsAirlinesException;
 import com.galactics.airlines.reservations.model.dto.request.AirportDTORequest;
 import com.galactics.airlines.reservations.model.dto.response.AirportDTOResponse;
 import com.galactics.airlines.reservations.service.AirportService;
@@ -30,7 +29,7 @@ public class AirportControllerTest {
     }
 
     @Test
-    void shouldReturnAirportWhenGetAirportIsCalledWithValidId() throws GalaticsAirlinesException {
+    void shouldReturnAirportWhenGetAirportIsCalledWithValidId() throws GalacticsAirlinesException {
         Long id = 1L;
         AirportDTOResponse expectedResponse = new AirportDTOResponse();
         when(airportService.getAirport(id)).thenReturn(expectedResponse);
@@ -43,16 +42,16 @@ public class AirportControllerTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenGetAirportIsCalledWithInvalidId() throws GalaticsAirlinesException {
+    void shouldThrowExceptionWhenGetAirportIsCalledWithInvalidId() throws GalacticsAirlinesException {
         Long id = -1L;
-        when(airportService.getAirport(id)).thenThrow(new GalaticsAirlinesException("Invalid id"));
+        when(airportService.getAirport(id)).thenThrow(new GalacticsAirlinesException("Invalid id"));
 
-        assertThrows(GalaticsAirlinesException.class, () -> airportController.getAirport(id));
+        assertThrows(GalacticsAirlinesException.class, () -> airportController.getAirport(id));
         verify(airportService, times(1)).getAirport(id);
     }
 
     @Test
-    void testAddAirport_Success() throws GalaticsAirlinesException {
+    void testAddAirport_Success() throws GalacticsAirlinesException {
         AirportDTORequest airportDTORequest = new AirportDTORequest();
         AirportDTOResponse expectedResponse = new AirportDTOResponse();
         when(airportService.addAirport(any())).thenReturn(expectedResponse);
@@ -64,7 +63,7 @@ public class AirportControllerTest {
     }
 
     @Test
-    void testUpdateAirport_Success() throws GalaticsAirlinesException {
+    void testUpdateAirport_Success() throws GalacticsAirlinesException {
         Long id = 1L;
         AirportDTORequest airportDTORequest = new AirportDTORequest();
         AirportDTOResponse expectedResponse = new AirportDTOResponse();
@@ -77,7 +76,7 @@ public class AirportControllerTest {
     }
 
     @Test
-    void testDeleteAirport_Success() throws GalaticsAirlinesException {
+    void testDeleteAirport_Success() throws GalacticsAirlinesException {
         Long id = 1L;
 
         ResponseEntity<Void> responseEntity = airportController.deleteAirport(id);
@@ -87,9 +86,9 @@ public class AirportControllerTest {
     }
 
     @Test
-    void testDeleteAirport_Failure() throws GalaticsAirlinesException {
+    void testDeleteAirport_Failure() throws GalacticsAirlinesException {
         Long id = 1L;
-        doThrow(new GalaticsAirlinesException("Airport not found")).when(airportService).deleteAirport(id);
+        doThrow(new GalacticsAirlinesException("Airport not found")).when(airportService).deleteAirport(id);
 
         ResponseEntity<Void> responseEntity = airportController.deleteAirport(id);
 

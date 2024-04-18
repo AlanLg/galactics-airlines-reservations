@@ -1,6 +1,6 @@
 package com.galactics.airlines.reservations.service;
 
-import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
+import com.galactics.airlines.reservations.exception.GalacticsAirlinesException;
 import com.galactics.airlines.reservations.mapper.FlightMapper;
 import com.galactics.airlines.reservations.model.dto.request.AirplaneDTORequest;
 import com.galactics.airlines.reservations.model.dto.request.AirportDTORequest;
@@ -49,7 +49,7 @@ public class FlightServiceImplTest {
     }
 
     @Test
-    void shouldReturnFlightWhenGetFlightIsCalledWithValidId() throws GalaticsAirlinesException {
+    void shouldReturnFlightWhenGetFlightIsCalledWithValidId() throws GalacticsAirlinesException {
         Long id = 1L;
         Flight flight = new Flight();
         when(flightRepository.findById(id)).thenReturn(Optional.of(flight));
@@ -63,7 +63,7 @@ public class FlightServiceImplTest {
 
     @Test
     void shouldThrowExceptionWhenGetFlightIsCalledWithNullId() {
-        assertThrows(GalaticsAirlinesException.class, () -> flightService.getFlight(null));
+        assertThrows(GalacticsAirlinesException.class, () -> flightService.getFlight(null));
         verify(flightRepository, never()).findById(any());
     }
 
@@ -72,12 +72,12 @@ public class FlightServiceImplTest {
         Long id = -1L;
         when(flightRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertThrows(GalaticsAirlinesException.class, () -> flightService.getFlight(id));
+        assertThrows(GalacticsAirlinesException.class, () -> flightService.getFlight(id));
         verify(flightRepository, times(1)).findById(id);
     }
 
     @Test
-    void testAddFlight_Success() throws GalaticsAirlinesException {
+    void testAddFlight_Success() throws GalacticsAirlinesException {
         AirportDTORequest airport = new AirportDTORequest();
         airport.setAirportName("TestAirportName");
         airport.setCity("TestCity");
@@ -112,7 +112,7 @@ public class FlightServiceImplTest {
     }
 
     @Test
-    void testUpdateFlight_Success() throws GalaticsAirlinesException {
+    void testUpdateFlight_Success() throws GalacticsAirlinesException {
         Long id = 1L;
         AirportDTORequest airport = new AirportDTORequest();
         airport.setAirportName("TestAirportName");
@@ -147,7 +147,7 @@ public class FlightServiceImplTest {
     }
 
     @Test
-    void testDeleteFlight_Success() throws GalaticsAirlinesException {
+    void testDeleteFlight_Success() throws GalacticsAirlinesException {
         Long id = 1L;
         Flight flight = new Flight();
         when(flightRepository.findById(id)).thenReturn(Optional.of(flight));
@@ -159,7 +159,7 @@ public class FlightServiceImplTest {
 
     @Test
     void testDeleteFlight_Failure_IdNull() {
-        assertThrows(GalaticsAirlinesException.class, () -> flightService.deleteFlight(null));
+        assertThrows(GalacticsAirlinesException.class, () -> flightService.deleteFlight(null));
     }
 
     @Test
@@ -167,11 +167,11 @@ public class FlightServiceImplTest {
         Long id = 1L;
         when(flightRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertThrows(GalaticsAirlinesException.class, () -> flightService.deleteFlight(id));
+        assertThrows(GalacticsAirlinesException.class, () -> flightService.deleteFlight(id));
     }
 
     @Test
-    void testSearchFlight_NoFilter() throws GalaticsAirlinesException {
+    void testSearchFlight_NoFilter() throws GalacticsAirlinesException {
         FilterFlightDTORequest filter = new FilterFlightDTORequest();
         List<Flight> flights = Arrays.asList(new Flight(), new Flight(), new Flight());
         when(flightRepository.findAll()).thenReturn(flights);
@@ -183,7 +183,7 @@ public class FlightServiceImplTest {
     }
 
     @Test
-    void testSearchFlight_WithStartDateFilter() throws GalaticsAirlinesException {
+    void testSearchFlight_WithStartDateFilter() throws GalacticsAirlinesException {
         Flight flight1 = new Flight();
         flight1.setDepartureDateTime(LocalDateTime.of(2024, 1, 1, 1, 1));
         Flight flight2 = new Flight();
@@ -201,7 +201,7 @@ public class FlightServiceImplTest {
     }
 
     @Test
-    void testSearchFlight_WithEndDateFilter() throws GalaticsAirlinesException {
+    void testSearchFlight_WithEndDateFilter() throws GalacticsAirlinesException {
         Flight flight1 = new Flight();
         flight1.setArrivalDateTime(LocalDateTime.of(2024, 1, 1, 1, 1));
         Flight flight2 = new Flight();
@@ -218,7 +218,7 @@ public class FlightServiceImplTest {
     }
 
     @Test
-    void testSearchFlight_WithDepartureCityFilter() throws GalaticsAirlinesException {
+    void testSearchFlight_WithDepartureCityFilter() throws GalacticsAirlinesException {
         Flight flight1 = new Flight();
         flight1.setDepartureCity("New York");
         Flight flight2 = new Flight();
@@ -235,7 +235,7 @@ public class FlightServiceImplTest {
     }
 
     @Test
-    void testSearchFlight_WithArrivalCityFilter() throws GalaticsAirlinesException {
+    void testSearchFlight_WithArrivalCityFilter() throws GalacticsAirlinesException {
         Flight flight1 = new Flight();
         flight1.setArrivalCity("New York");
         Flight flight2 = new Flight();
@@ -252,7 +252,7 @@ public class FlightServiceImplTest {
     }
 
     @Test
-    void testSearchFlight_WithDepartureAirportFilter() throws GalaticsAirlinesException {
+    void testSearchFlight_WithDepartureAirportFilter() throws GalacticsAirlinesException {
         Airport airport1 = new Airport();
         airport1.setAirportName("CDG");
         Flight flight1 = new Flight();
@@ -271,7 +271,7 @@ public class FlightServiceImplTest {
     }
 
     @Test
-    void testSearchFlight_WithArrivalAirportFilter() throws GalaticsAirlinesException {
+    void testSearchFlight_WithArrivalAirportFilter() throws GalacticsAirlinesException {
         Airport airport1 = new Airport();
         airport1.setAirportName("CDG");
         Flight flight1 = new Flight();
@@ -290,7 +290,7 @@ public class FlightServiceImplTest {
     }
 
     @Test
-    void testSearchFlight_WithAirplaneModelFilter() throws GalaticsAirlinesException {
+    void testSearchFlight_WithAirplaneModelFilter() throws GalacticsAirlinesException {
         Airplane airplane = new Airplane();
         airplane.setBrand("FB2001");
         Flight flight1 = new Flight();
