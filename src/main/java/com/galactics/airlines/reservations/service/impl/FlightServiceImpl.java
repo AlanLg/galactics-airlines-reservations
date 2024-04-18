@@ -1,9 +1,11 @@
 package com.galactics.airlines.reservations.service.impl;
 
+import com.galactics.airlines.reservations.exception.FlightNotFoundException;
 import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
 import com.galactics.airlines.reservations.mapper.FlightMapper;
 import com.galactics.airlines.reservations.model.dto.request.FilterFlightDTORequest;
 import com.galactics.airlines.reservations.model.dto.request.FlightDTORequest;
+import com.galactics.airlines.reservations.model.dto.request.ReservationDTORequest;
 import com.galactics.airlines.reservations.model.dto.request.ReservationDTORequestWithNoExistingClient;
 import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
 import com.galactics.airlines.reservations.model.entity.Airplane;
@@ -134,13 +136,13 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public Flight getFlightForReservation(ReservationDTORequestWithNoExistingClient reservationDTORequest) {
+    public Flight getFlightForReservation(ReservationDTORequest reservationDTORequest) {
         return flightRepository.findByDepartureCityAndArrivalCityAndDepartureDateTimeAndArrivalDateTime(
                 reservationDTORequest.getDepartureCity(),
                 reservationDTORequest.getArrivalCity(),
                 reservationDTORequest.getDepartureDateTime(),
                 reservationDTORequest.getArrivalDateTime()
-        ).orElseThrow(() -> new GalaticsAirlinesException("Aucun vol correspondant"));
+        ).orElseThrow(FlightNotFoundException::new);
     }
 
     private List<Flight> filterByStartDate(List<Flight> flights, LocalDateTime startDate) {

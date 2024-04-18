@@ -1,9 +1,8 @@
 package com.galactics.airlines.reservations.controller;
 
 import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
-import com.galactics.airlines.reservations.model.dto.request.FlightDTORequest;
+import com.galactics.airlines.reservations.model.dto.request.ReservationDTORequestWithExistingClient;
 import com.galactics.airlines.reservations.model.dto.request.ReservationDTORequestWithNoExistingClient;
-import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
 import com.galactics.airlines.reservations.model.dto.response.ReservationDTOResponse;
 import com.galactics.airlines.reservations.service.ReservationService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
@@ -27,8 +26,13 @@ public class ReservationController {
 
     private final ReservationService reservationService;
 
-    @PostMapping("/add")
-    public ResponseEntity<ReservationDTOResponse> addFlight(@RequestBody ReservationDTORequestWithNoExistingClient reservationDTORequestWithNoExistingClient) throws GalaticsAirlinesException {
+    @PostMapping("/add/without-existing-client")
+    public ResponseEntity<ReservationDTOResponse> addReservationWithNoExistingClient(@RequestBody ReservationDTORequestWithNoExistingClient reservationDTORequestWithNoExistingClient) throws GalaticsAirlinesException {
         return ResponseEntity.ok(reservationService.createReservation(reservationDTORequestWithNoExistingClient));
+    }
+
+    @PostMapping("/add/with-existing-client")
+    public ResponseEntity<ReservationDTOResponse> addReservationWithExistingClient(@RequestBody ReservationDTORequestWithExistingClient reservationDTORequestWithExistingClient) throws GalaticsAirlinesException {
+        return ResponseEntity.ok(reservationService.createReservation(reservationDTORequestWithExistingClient));
     }
 }

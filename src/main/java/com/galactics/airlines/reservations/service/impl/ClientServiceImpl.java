@@ -1,10 +1,12 @@
 package com.galactics.airlines.reservations.service.impl;
 
 import com.galactics.airlines.reservations.exception.ClientAlreadyExistsException;
+import com.galactics.airlines.reservations.exception.ClientNotFoundException;
 import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
 import com.galactics.airlines.reservations.mapper.ClientMapper;
 import com.galactics.airlines.reservations.mapper.ReservationMapper;
 import com.galactics.airlines.reservations.model.dto.request.ClientDTORequest;
+import com.galactics.airlines.reservations.model.dto.request.ReservationDTORequestWithExistingClient;
 import com.galactics.airlines.reservations.model.dto.request.ReservationDTORequestWithNoExistingClient;
 import com.galactics.airlines.reservations.model.dto.response.ClientDTOResponse;
 import com.galactics.airlines.reservations.model.entity.Client;
@@ -83,5 +85,15 @@ public class ClientServiceImpl implements ClientService {
         ClientDTORequest clientDTORequest = ReservationMapper.INSTANCE.reservationDTORequestToClientDTORequest(reservationDTORequestWithNoExistingClient);
         ClientDTOResponse clientDTOResponse = addClient(clientDTORequest);
         return ClientMapper.INSTANCE.clientDTOResponseToClientEntity(clientDTOResponse);
+    }
+
+    @Override
+    public Client getClientForReservation(ReservationDTORequestWithExistingClient reservationDTORequestWithExistingClient) {
+        return clientRepository.findByEmail(reservationDTORequestWithExistingClient.getEmail())
+                .orElseThrow(() -> {
+                        log.info("Client pas trouve");
+                        return new ClientNotFoundException();
+                    }
+                );
     }
 }

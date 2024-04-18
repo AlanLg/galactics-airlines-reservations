@@ -3,6 +3,7 @@ package com.galactics.airlines.reservations.service;
 import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
 import com.galactics.airlines.reservations.model.dto.request.FilterFlightDTORequest;
 import com.galactics.airlines.reservations.model.dto.request.FlightDTORequest;
+import com.galactics.airlines.reservations.model.dto.request.ReservationDTORequest;
 import com.galactics.airlines.reservations.model.dto.request.ReservationDTORequestWithNoExistingClient;
 import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
 import com.galactics.airlines.reservations.model.entity.Flight;
@@ -20,5 +21,5 @@ public interface FlightService {
 
     List<FlightDTOResponse> searchFlight(FilterFlightDTORequest filterFlightDTORequest);
 
-    Flight getFlightForReservation(ReservationDTORequestWithNoExistingClient reservationDTORequestWithNoExistingClient);
+    Flight getFlightForReservation(ReservationDTORequest reservationDTORequest);
 }

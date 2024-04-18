@@ -18,13 +18,13 @@ public class Flight {
     private String arrivalCity;
     private LocalDateTime departureDateTime;
     private LocalDateTime arrivalDateTime;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "departure_airport_id")
     private Airport departureAirport;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "arrival_airport_id")
     private Airport arrivalAirport;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "airplane_id")
     private Airplane airplane;
     private int numberOfSeats;
