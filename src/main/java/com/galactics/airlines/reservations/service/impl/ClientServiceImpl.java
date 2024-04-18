@@ -13,7 +13,6 @@ import com.galactics.airlines.reservations.model.entity.Client;
 import com.galactics.airlines.reservations.repository.ClientRepository;
 import com.galactics.airlines.reservations.service.ClientService;
 import com.galactics.airlines.reservations.utils.ClientValidationUtils;
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +26,11 @@ public class ClientServiceImpl implements ClientService {
 
     public ClientServiceImpl(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
+    }
+
+    @Override
+    public ClientDTOResponse getClient(Long id) {
+        return ClientMapper.INSTANCE.clientEntityToClientDTOResponse(clientRepository.findById(id).orElseThrow(ClientNotFoundException::new));
     }
 
     @Override

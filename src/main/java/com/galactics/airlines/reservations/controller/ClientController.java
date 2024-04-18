@@ -3,6 +3,7 @@ package com.galactics.airlines.reservations.controller;
 import com.galactics.airlines.reservations.exception.GalacticsAirlinesException;
 import com.galactics.airlines.reservations.model.dto.request.ClientDTORequest;
 import com.galactics.airlines.reservations.model.dto.response.ClientDTOResponse;
+import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
 import com.galactics.airlines.reservations.service.ClientService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -22,6 +23,11 @@ public class ClientController {
 
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<ClientDTOResponse> getClient(@PathVariable Long id) throws GalacticsAirlinesException {
+        return ResponseEntity.ok(clientService.getClient(id));
     }
 
     @PostMapping("/add")
