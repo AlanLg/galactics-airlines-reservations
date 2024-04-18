@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class FlightControllerTest {
@@ -26,6 +27,28 @@ public class FlightControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void shouldReturnFlightWhenGetFlightIsCalledWithValidId() throws GalaticsAirlinesException {
+        Long id = 1L;
+        FlightDTOResponse expectedResponse = new FlightDTOResponse();
+        when(flightService.getFlight(id)).thenReturn(expectedResponse);
+
+        ResponseEntity<FlightDTOResponse> response = flightController.getFlight(id);
+
+        assertEquals(expectedResponse, response.getBody());
+        assertEquals(200, response.getStatusCodeValue());
+        verify(flightService, times(1)).getFlight(id);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenGetFlightIsCalledWithInvalidId() throws GalaticsAirlinesException {
+        Long id = -1L;
+        when(flightService.getFlight(id)).thenThrow(new GalaticsAirlinesException("Invalid id"));
+
+        assertThrows(GalaticsAirlinesException.class, () -> flightController.getFlight(id));
+        verify(flightService, times(1)).getFlight(id);
     }
 
     @Test

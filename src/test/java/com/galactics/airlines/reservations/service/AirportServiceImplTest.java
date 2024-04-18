@@ -33,6 +33,34 @@ public class AirportServiceImplTest {
     }
 
     @Test
+    void shouldReturnAirportWhenGetAirportIsCalledWithValidId() throws GalaticsAirlinesException {
+        Long id = 1L;
+        Airport airport = new Airport();
+        when(airportRepository.findById(id)).thenReturn(Optional.of(airport));
+        AirportDTOResponse expectedResponse = AirportMapper.INSTANCE.airportEntityToAirportDTOResponse(airport);
+
+        AirportDTOResponse response = airportService.getAirport(id);
+
+        assertEquals(expectedResponse, response);
+        verify(airportRepository, times(1)).findById(id);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenGetAirportIsCalledWithNullId() {
+        assertThrows(GalaticsAirlinesException.class, () -> airportService.getAirport(null));
+        verify(airportRepository, never()).findById(any());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenGetAirportIsCalledWithNonExistingId() {
+        Long id = -1L;
+        when(airportRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(GalaticsAirlinesException.class, () -> airportService.getAirport(id));
+        verify(airportRepository, times(1)).findById(id);
+    }
+
+    @Test
     void testAddAirport_Success() throws GalaticsAirlinesException {
         // Arrange
         AirportDTORequest airportDTORequest = new AirportDTORequest();

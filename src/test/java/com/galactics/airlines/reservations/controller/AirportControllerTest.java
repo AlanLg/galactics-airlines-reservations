@@ -30,6 +30,28 @@ public class AirportControllerTest {
     }
 
     @Test
+    void shouldReturnAirportWhenGetAirportIsCalledWithValidId() throws GalaticsAirlinesException {
+        Long id = 1L;
+        AirportDTOResponse expectedResponse = new AirportDTOResponse();
+        when(airportService.getAirport(id)).thenReturn(expectedResponse);
+
+        ResponseEntity<AirportDTOResponse> response = airportController.getAirport(id);
+
+        assertEquals(expectedResponse, response.getBody());
+        assertEquals(200, response.getStatusCodeValue());
+        verify(airportService, times(1)).getAirport(id);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenGetAirportIsCalledWithInvalidId() throws GalaticsAirlinesException {
+        Long id = -1L;
+        when(airportService.getAirport(id)).thenThrow(new GalaticsAirlinesException("Invalid id"));
+
+        assertThrows(GalaticsAirlinesException.class, () -> airportController.getAirport(id));
+        verify(airportService, times(1)).getAirport(id);
+    }
+
+    @Test
     void testAddAirport_Success() throws GalaticsAirlinesException {
         AirportDTORequest airportDTORequest = new AirportDTORequest();
         AirportDTOResponse expectedResponse = new AirportDTOResponse();

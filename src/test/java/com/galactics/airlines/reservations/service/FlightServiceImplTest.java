@@ -1,6 +1,7 @@
 package com.galactics.airlines.reservations.service;
 
 import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
+import com.galactics.airlines.reservations.mapper.FlightMapper;
 import com.galactics.airlines.reservations.model.dto.request.AirplaneDTORequest;
 import com.galactics.airlines.reservations.model.dto.request.AirportDTORequest;
 import com.galactics.airlines.reservations.model.dto.request.FilterFlightDTORequest;
@@ -45,6 +46,34 @@ public class FlightServiceImplTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void shouldReturnFlightWhenGetFlightIsCalledWithValidId() throws GalaticsAirlinesException {
+        Long id = 1L;
+        Flight flight = new Flight();
+        when(flightRepository.findById(id)).thenReturn(Optional.of(flight));
+        FlightDTOResponse expectedResponse = FlightMapper.INSTANCE.flightEntityToFlightDTOResponse(flight);
+
+        FlightDTOResponse response = flightService.getFlight(id);
+
+        assertEquals(expectedResponse, response);
+        verify(flightRepository, times(1)).findById(id);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenGetFlightIsCalledWithNullId() {
+        assertThrows(GalaticsAirlinesException.class, () -> flightService.getFlight(null));
+        verify(flightRepository, never()).findById(any());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenGetFlightIsCalledWithNonExistingId() {
+        Long id = -1L;
+        when(flightRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(GalaticsAirlinesException.class, () -> flightService.getFlight(id));
+        verify(flightRepository, times(1)).findById(id);
     }
 
     @Test
@@ -263,13 +292,13 @@ public class FlightServiceImplTest {
     @Test
     void testSearchFlight_WithAirplaneModelFilter() throws GalaticsAirlinesException {
         Airplane airplane = new Airplane();
-        airplane.setModel("FB2001");
+        airplane.setBrand("FB2001");
         Flight flight1 = new Flight();
         flight1.setAirplane(airplane);
         Flight flight2 = new Flight();
         flight2.setAirplane(airplane);
         FilterFlightDTORequest filter = new FilterFlightDTORequest();
-        filter.setAirplaneModel(Optional.of("FB2001"));
+        filter.setAirplaneBrand(Optional.of("FB2001"));
         List<Flight> flights = Arrays.asList(flight1, flight2);
         when(flightRepository.findAll()).thenReturn(flights);
 

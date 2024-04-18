@@ -3,6 +3,7 @@ package com.galactics.airlines.reservations.controller;
 import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
 import com.galactics.airlines.reservations.model.dto.request.AirportDTORequest;
 import com.galactics.airlines.reservations.model.dto.response.AirportDTOResponse;
+import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
 import com.galactics.airlines.reservations.service.AirportService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -22,6 +23,11 @@ public class AirportController {
 
     public AirportController(AirportService airportService) {
         this.airportService = airportService;
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<AirportDTOResponse> getAirport(@PathVariable Long id) throws GalaticsAirlinesException {
+        return ResponseEntity.ok(airportService.getAirport(id));
     }
 
     @PostMapping("/add")

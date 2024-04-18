@@ -22,4 +22,6 @@ public interface FlightService {
     List<FlightDTOResponse> searchFlight(FilterFlightDTORequest filterFlightDTORequest);
 
     Flight getFlightForReservation(ReservationDTORequest reservationDTORequest);
+
+    FlightDTOResponse getFlight(Long id) throws GalaticsAirlinesException;
 }

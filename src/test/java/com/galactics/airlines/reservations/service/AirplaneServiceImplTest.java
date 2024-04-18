@@ -1,6 +1,7 @@
 package com.galactics.airlines.reservations.service;
 
 import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
+import com.galactics.airlines.reservations.mapper.AirplaneMapper;
 import com.galactics.airlines.reservations.model.dto.request.AirplaneDTORequest;
 import com.galactics.airlines.reservations.model.dto.response.AirplaneDTOResponse;
 import com.galactics.airlines.reservations.model.entity.Airplane;
@@ -17,6 +18,7 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -28,6 +30,34 @@ public class AirplaneServiceImplTest {
 
     @InjectMocks
     private AirplaneServiceImpl airplaneService;
+
+    @Test
+    public void shouldReturnAirplaneWhenGetAirplaneIsCalledWithValidId() throws GalaticsAirlinesException {
+        Long id = 1L;
+        Airplane airplane = new Airplane();
+        when(airplaneRepository.findById(id)).thenReturn(Optional.of(airplane));
+        AirplaneDTOResponse expectedResponse = AirplaneMapper.INSTANCE.airplaneEntityToAirplaneDTOResponse(airplane);
+
+        AirplaneDTOResponse response = airplaneService.getAirplane(id);
+
+        assertEquals(expectedResponse, response);
+        verify(airplaneRepository, times(1)).findById(id);
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenGetAirplaneIsCalledWithNullId() {
+        assertThrows(GalaticsAirlinesException.class, () -> airplaneService.getAirplane(null));
+        verify(airplaneRepository, never()).findById(any());
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenGetAirplaneIsCalledWithNonExistingId() {
+        Long id = -1L;
+        when(airplaneRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(GalaticsAirlinesException.class, () -> airplaneService.getAirplane(id));
+        verify(airplaneRepository, times(1)).findById(id);
+    }
 
     @Test
     public void testAddAirplane_Success() throws GalaticsAirlinesException {

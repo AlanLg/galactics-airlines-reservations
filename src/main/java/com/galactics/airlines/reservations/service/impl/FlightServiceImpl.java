@@ -128,8 +128,8 @@ public class FlightServiceImpl implements FlightService {
             flights = filterByArrivalAirport(flights, filter.getArrivalAirport().get());
         }
 
-        if (filter.getAirplaneModel() != null && filter.getAirplaneModel().isPresent() && ValidationUtils.isNotEmpty(filter.getAirplaneModel().get())) {
-            flights = filterByAirplaneModel(flights, filter.getAirplaneModel().get());
+        if (filter.getAirplaneBrand() != null && filter.getAirplaneBrand().isPresent() && ValidationUtils.isNotEmpty(filter.getAirplaneBrand().get())) {
+            flights = filterByAirplaneModel(flights, filter.getAirplaneBrand().get());
         }
 
         return FlightMapper.INSTANCE.flightEntitiesToFlightDTOResponses(flights);
@@ -143,6 +143,20 @@ public class FlightServiceImpl implements FlightService {
                 reservationDTORequest.getDepartureDateTime(),
                 reservationDTORequest.getArrivalDateTime()
         ).orElseThrow(FlightNotFoundException::new);
+    }
+
+    @Override
+    public FlightDTOResponse getFlight(Long id) throws GalaticsAirlinesException {
+        if (id == null) {
+            throw new GalaticsAirlinesException("Il manque un élément dans le json");
+        }
+
+        Flight targetFlight = flightRepository.findById(id).orElse(null);
+
+        if (targetFlight == null) {
+            throw new GalaticsAirlinesException("Aucun flight en bdd");
+        }
+        return FlightMapper.INSTANCE.flightEntityToFlightDTOResponse(targetFlight);
     }
 
     private List<Flight> filterByStartDate(List<Flight> flights, LocalDateTime startDate) {
@@ -181,9 +195,9 @@ public class FlightServiceImpl implements FlightService {
                 .toList();
     }
 
-    private List<Flight> filterByAirplaneModel(List<Flight> flights, String airplaneModel) {
+    private List<Flight> filterByAirplaneModel(List<Flight> flights, String airplaneBrand) {
         return flights.stream()
-                .filter(flight -> flight.getAirplane().getModel().equalsIgnoreCase(airplaneModel))
+                .filter(flight -> flight.getAirplane().getBrand().equals(airplaneBrand))
                 .toList();
     }
 

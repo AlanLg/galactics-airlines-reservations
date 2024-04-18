@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class AirplaneControllerTest {
@@ -28,12 +29,34 @@ public class AirplaneControllerTest {
     }
 
     @Test
+    void shouldReturnAirplaneWhenGetAirplaneIsCalledWithValidId() throws GalaticsAirlinesException {
+        Long id = 1L;
+        AirplaneDTOResponse expectedResponse = new AirplaneDTOResponse();
+        when(airplaneService.getAirplane(id)).thenReturn(expectedResponse);
+
+        ResponseEntity<AirplaneDTOResponse> response = airplaneController.getAirplane(id);
+
+        assertEquals(expectedResponse, response.getBody());
+        assertEquals(200, response.getStatusCodeValue());
+        verify(airplaneService, times(1)).getAirplane(id);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenGetAirplaneIsCalledWithInvalidId() throws GalaticsAirlinesException {
+        Long id = -1L;
+        when(airplaneService.getAirplane(id)).thenThrow(new GalaticsAirlinesException("Invalid id"));
+
+        assertThrows(GalaticsAirlinesException.class, () -> airplaneController.getAirplane(id));
+        verify(airplaneService, times(1)).getAirplane(id);
+    }
+
+    @Test
     void testAddAirplane_Success() throws GalaticsAirlinesException {
         AirplaneDTORequest request = new AirplaneDTORequest();
         AirplaneDTOResponse expectedResponse = new AirplaneDTOResponse();
         when(airplaneService.addAirplane(request)).thenReturn(expectedResponse);
 
-        ResponseEntity<AirplaneDTOResponse> response = airplaneController.addFlight(request);
+        ResponseEntity<AirplaneDTOResponse> response = airplaneController.addAirplane(request);
 
         assertEquals(expectedResponse, response.getBody());
         assertEquals(200, response.getStatusCodeValue());
@@ -47,7 +70,7 @@ public class AirplaneControllerTest {
         AirplaneDTOResponse expectedResponse = new AirplaneDTOResponse();
         when(airplaneService.updateAirplane(id, request)).thenReturn(expectedResponse);
 
-        ResponseEntity<AirplaneDTOResponse> response = airplaneController.updateFlight(id, request);
+        ResponseEntity<AirplaneDTOResponse> response = airplaneController.updateAirplane(id, request);
 
         assertEquals(expectedResponse, response.getBody());
         assertEquals(200, response.getStatusCodeValue());
@@ -59,7 +82,7 @@ public class AirplaneControllerTest {
     void testDeleteAirplane_Success() throws GalaticsAirlinesException {
         Long id = 1L;
 
-        ResponseEntity<Void> response = airplaneController.deleteFlight(id);
+        ResponseEntity<Void> response = airplaneController.deleteAirplane(id);
 
         assertEquals(202, response.getStatusCodeValue());
 
@@ -71,7 +94,7 @@ public class AirplaneControllerTest {
         Long id = 1L;
         doThrow(new GalaticsAirlinesException("")).when(airplaneService).deleteAirplane(id);
 
-        ResponseEntity<Void> response = airplaneController.deleteFlight(id);
+        ResponseEntity<Void> response = airplaneController.deleteAirplane(id);
 
         assertEquals(400, response.getStatusCodeValue());
 

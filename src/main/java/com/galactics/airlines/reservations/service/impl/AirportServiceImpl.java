@@ -22,6 +22,20 @@ public class AirportServiceImpl implements AirportService {
     }
 
     @Override
+    public AirportDTOResponse getAirport(Long id) throws GalaticsAirlinesException {
+        if (id == null) {
+            throw new GalaticsAirlinesException("Il manque un élément dans le json");
+        }
+
+        Airport targetAirport = airportRepository.findById(id).orElse(null);
+
+        if (targetAirport == null) {
+            throw new GalaticsAirlinesException("Aucun flight en bdd");
+        }
+        return AirportMapper.INSTANCE.airportEntityToAirportDTOResponse(targetAirport);
+    }
+
+    @Override
     public AirportDTOResponse addAirport(AirportDTORequest airportDTORequest) throws GalaticsAirlinesException {
         Airport createdAirport = AirportMapper.INSTANCE.airportDTORequestToAirportEntity(airportDTORequest);
 

@@ -26,6 +26,11 @@ public class FlightController {
         this.flightService = flightService;
     }
 
+    @GetMapping("/get/{id}")
+    public ResponseEntity<FlightDTOResponse> getFlight(@PathVariable Long id) throws GalaticsAirlinesException {
+        return ResponseEntity.ok(flightService.getFlight(id));
+    }
+
     @PostMapping("/add")
     public ResponseEntity<FlightDTOResponse> addFlight(@RequestBody FlightDTORequest flightDTORequest) throws GalaticsAirlinesException {
         log.info("Adding flight: {}", flightDTORequest.toString());

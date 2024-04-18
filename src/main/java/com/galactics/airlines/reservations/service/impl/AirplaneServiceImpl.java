@@ -2,9 +2,12 @@ package com.galactics.airlines.reservations.service.impl;
 
 import com.galactics.airlines.reservations.exception.GalaticsAirlinesException;
 import com.galactics.airlines.reservations.mapper.AirplaneMapper;
+import com.galactics.airlines.reservations.mapper.FlightMapper;
 import com.galactics.airlines.reservations.model.dto.request.AirplaneDTORequest;
 import com.galactics.airlines.reservations.model.dto.response.AirplaneDTOResponse;
+import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
 import com.galactics.airlines.reservations.model.entity.Airplane;
+import com.galactics.airlines.reservations.model.entity.Flight;
 import com.galactics.airlines.reservations.repository.AirplaneRepository;
 import com.galactics.airlines.reservations.service.AirplaneService;
 import com.galactics.airlines.reservations.utils.AirplaneValidationUtils;
@@ -67,6 +70,20 @@ public class AirplaneServiceImpl implements AirplaneService {
         } else {
             throw new GalaticsAirlinesException("Aucun vol en base");
         }
+    }
+
+    @Override
+    public AirplaneDTOResponse getAirplane(Long id) throws GalaticsAirlinesException {
+        if (id == null) {
+            throw new GalaticsAirlinesException("Il manque un élément dans le json");
+        }
+
+        Airplane targetAirplane = airplaneRepository.findById(id).orElse(null);
+
+        if (targetAirplane == null) {
+            throw new GalaticsAirlinesException("Aucun flight en bdd");
+        }
+        return AirplaneMapper.INSTANCE.airplaneEntityToAirplaneDTOResponse(targetAirplane);
     }
 
     public Airplane findOrSaveAirplane(Airplane airplane) {
