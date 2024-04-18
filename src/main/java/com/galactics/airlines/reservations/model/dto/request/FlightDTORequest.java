@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class FlightDTORequest {
-    private Long flightId;
     private String departureCity;
     private String arrivalCity;
     private String departureDateTime;

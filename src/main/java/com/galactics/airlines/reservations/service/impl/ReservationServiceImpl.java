@@ -30,9 +30,9 @@ public class ReservationServiceImpl implements ReservationService {
     private final FlightService flightService;
 
     @Override
-    public ReservationDTOResponse createReservation(ReservationDTORequestWithNoExistingClient reservationDTORequestWithNoExistingClient) {
-        Client client = clientService.createClientForReservation(reservationDTORequestWithNoExistingClient);
-        Flight flight = flightService.getFlightForReservation(reservationDTORequestWithNoExistingClient);
+    public ReservationDTOResponse createReservation(ReservationDTORequestWithNoExistingClient reservationDTORequest) {
+        Client client = clientService.createClientForReservation(reservationDTORequest);
+        Flight flight = flightService.getFlightForReservation(reservationDTORequest);
 
         Reservation createdReservation = ReservationMapper.INSTANCE.clientEntityAndFlightEntityToReservationEntity(client, flight);
 

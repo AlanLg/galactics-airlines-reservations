@@ -9,7 +9,6 @@ import java.util.Date;
 @Data
 @Getter @Setter
 public class ClientDTOResponse {
-    private Long id;
     private String firstname;
     private String lastname;
     private String address;
