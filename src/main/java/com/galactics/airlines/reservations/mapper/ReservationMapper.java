@@ -40,20 +40,8 @@ public interface ReservationMapper {
     @Mapping(source = "flight.airplane", target = "flight.airplane")
     ReservationDTOResponse reservationEntityToReservationDTOResponse(Reservation reservation);
 
-    @Mapping(source = "client.id", target = "client.id")
-    @Mapping(source = "client.firstname", target = "client.firstname")
-    @Mapping(source = "client.lastname", target = "client.lastname")
-    @Mapping(source = "client.address", target = "client.address")
-    @Mapping(source = "client.email", target = "client.email")
-    @Mapping(source = "client.phoneNumber", target = "client.phoneNumber")
-    @Mapping(source = "client.birthday", target = "client.birthday")
-    @Mapping(source = "client.passportNumber", target = "client.passportNumber")
-    @Mapping(source = "flight.departureCity", target = "flight.departureCity")
-    @Mapping(source = "flight.arrivalCity", target = "flight.arrivalCity")
-    @Mapping(source = "flight.departureDateTime", target = "flight.departureDateTime")
-    @Mapping(source = "flight.arrivalDateTime", target = "flight.arrivalDateTime")
-    @Mapping(source = "flight.departureAirport", target = "flight.departureAirport")
-    @Mapping(source = "flight.arrivalAirport", target = "flight.arrivalAirport")
-    @Mapping(source = "flight.airplane", target = "flight.airplane")
+
+    @Mapping(source = "client", target = "client")
+    @Mapping(source = "flight", target = "flight")
     Reservation clientEntityAndFlightEntityToReservationEntity(Client client, Flight flight);
 }
