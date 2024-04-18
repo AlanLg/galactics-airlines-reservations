@@ -6,7 +6,6 @@ import com.galactics.airlines.reservations.mapper.FlightMapper;
 import com.galactics.airlines.reservations.model.dto.request.FilterFlightDTORequest;
 import com.galactics.airlines.reservations.model.dto.request.FlightDTORequest;
 import com.galactics.airlines.reservations.model.dto.request.ReservationDTORequest;
-import com.galactics.airlines.reservations.model.dto.request.ReservationDTORequestWithNoExistingClient;
 import com.galactics.airlines.reservations.model.dto.response.FlightDTOResponse;
 import com.galactics.airlines.reservations.model.entity.Airplane;
 import com.galactics.airlines.reservations.model.entity.Airport;
