@@ -1,4 +1,4 @@
-package com.galactics.airlines.reservations.service;
+package com.galactics.airlines.reservations.service.impl;
 
 import com.galactics.airlines.reservations.exception.GalacticsAirlinesException;
 import com.galactics.airlines.reservations.mapper.AirplaneMapper;

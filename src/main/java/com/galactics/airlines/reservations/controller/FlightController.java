@@ -8,6 +8,7 @@ import com.galactics.airlines.reservations.service.FlightService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class FlightController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<FlightDTOResponse> addFlight(@RequestBody FlightDTORequest flightDTORequest) throws GalacticsAirlinesException {
+    public ResponseEntity<FlightDTOResponse> addFlight(@Valid @RequestBody FlightDTORequest flightDTORequest) throws GalacticsAirlinesException {
         log.info("Adding flight: {}", flightDTORequest.toString());
         return ResponseEntity.ok(flightService.addFlight(flightDTORequest));
     }
