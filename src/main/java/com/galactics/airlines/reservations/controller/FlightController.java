@@ -55,7 +55,7 @@ public class FlightController {
         }
     }
 
-    @PostMapping("/search")
+    @GetMapping("/search")
     public ResponseEntity<List<FlightDTOResponse>> searchFlight (@RequestBody FilterFlightDTORequest filterFlightDTORequest) {
         log.info("Searching flight with filter: {}", filterFlightDTORequest.toString());
         return ResponseEntity.ok(flightService.searchFlight(filterFlightDTORequest));
